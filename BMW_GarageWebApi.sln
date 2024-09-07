@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BMW_GarageWebApi", "BMW_GarageWebApi\BMW_GarageWebApi.csproj", "{7B8A54CF-CDF1-4CCE-91E2-A44718D02322}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BMW_GarageWebApi.BLL", "BMW_GarageWebApi.BLL\BMW_GarageWebApi.BLL.csproj", "{661FB665-1368-4B26-B283-65FDBE084BA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BMW_GarageWebApi.DAL", "BMW_GarageWebApi.DAL\BMW_GarageWebApi.DAL.csproj", "{B02CFD83-8AC4-46D5-A4A1-02855337BDCA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BMW_GarageWebApi.Domain", "BMW_GarageWebApi.Domain\BMW_GarageWebApi.Domain.csproj", "{23818EDB-D3E0-44F5-8655-5D65C5E13F15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BMW_GarageWebApi.Utility", "BMW_GarageWebApi.Utility\BMW_GarageWebApi.Utility.csproj", "{8546684B-E37A-411D-B55C-72FB80045756}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7B8A54CF-CDF1-4CCE-91E2-A44718D02322}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B8A54CF-CDF1-4CCE-91E2-A44718D02322}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B8A54CF-CDF1-4CCE-91E2-A44718D02322}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B8A54CF-CDF1-4CCE-91E2-A44718D02322}.Release|Any CPU.Build.0 = Release|Any CPU
+		{661FB665-1368-4B26-B283-65FDBE084BA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{661FB665-1368-4B26-B283-65FDBE084BA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{661FB665-1368-4B26-B283-65FDBE084BA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{661FB665-1368-4B26-B283-65FDBE084BA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B02CFD83-8AC4-46D5-A4A1-02855337BDCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B02CFD83-8AC4-46D5-A4A1-02855337BDCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B02CFD83-8AC4-46D5-A4A1-02855337BDCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B02CFD83-8AC4-46D5-A4A1-02855337BDCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23818EDB-D3E0-44F5-8655-5D65C5E13F15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23818EDB-D3E0-44F5-8655-5D65C5E13F15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23818EDB-D3E0-44F5-8655-5D65C5E13F15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23818EDB-D3E0-44F5-8655-5D65C5E13F15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8546684B-E37A-411D-B55C-72FB80045756}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8546684B-E37A-411D-B55C-72FB80045756}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8546684B-E37A-411D-B55C-72FB80045756}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8546684B-E37A-411D-B55C-72FB80045756}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {66A2C251-CB8F-44AB-9FB7-7CC056F460CB}
+	EndGlobalSection
+EndGlobal
