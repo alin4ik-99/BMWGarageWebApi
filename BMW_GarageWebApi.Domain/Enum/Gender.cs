@@ -13,7 +13,7 @@ namespace BMW_GarageWebApi.Domain.Enum
         Male, 
 
         [Display(Name = "Жінка")]
-        Female2
+        Female
  
     }
 }

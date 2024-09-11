@@ -19,4 +19,5 @@ html {
 
 body {
   margin-bottom: 60px;
+  background: linear-gradient(to top left, #ffffff, #b3feff, #9bfcef);
 }

@@ -1,0 +1,104 @@
+﻿@using BMW_GarageWebApi.Domain.Models
+@model Employee
+
+
+<div class="container">
+<div class="card shadow border-0 mt-4">
+        <div class="card-header bg-primary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Додати нового працівника</h2>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card-body p-4">
+        <form method="post" class="row" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-10">
+                        <div class="border p-3">
+                            @*  <div asp-validation-summary="ModelOnly"></div> *@
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="FullName" class="form-control border-0 shadow" />
+                                <label asp-for="FullName" class="ms-2"></label>
+                                <span asp-validation-for="FullName" class="text-danger"></span>
+                            </div>
+
+                            <div class="row form-floating py-2 ">
+
+                                <div class="col-6">
+                                    <label asp-for="DateOfBirth" class="ms-2"></label>
+                                    <input type="date" id="DateOfBirth" name="DateOfBirth" class="form-control" asp-for="DateOfBirth" asp-format="{0:yyyy-MM-dd}" />
+                                </div>
+                                <div class="col-6">
+                                    <label asp-for="DateOfHiring" class="ms-2"></label>
+                                    <input type="date" id="DateOfHiring" name="DateOfHiring" class="form-control" asp-for="DateOfHiring" asp-format="{0:yyyy-MM-dd}" />
+                                </div>
+
+                            </div>
+
+                                <div class="form-floating py-2 col-12">
+                                    <select asp-for="Gender" class="form-select border-0 shadow">
+                                        <option disabled selected>Обрати стать людини</option>
+                                        <option value="Male">Чоловік</option>
+                                        <option value="Female">Жінка</option>
+                                    </select>
+                                    <label asp-for="Gender" class="ms-2"></label>
+                                    <span asp-validation-for="Gender" class="text-danger"></span>
+                                </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="Email" class="form-control border-0 shadow" />
+                                <label asp-for="Email" class="ms-2"></label>
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="PhoneNumber" class="form-control border-0 shadow" />
+                                <label asp-for="PhoneNumber" class="ms-2"></label>
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="Position" class="form-control border-0 shadow" />
+                                <label asp-for="Position" class="ms-2"></label>
+                                <span asp-validation-for="Position" class="text-danger"></span>
+                            </div>
+                            <div class="py-2 col-12">
+                                    <label asp-for="Notes" class="ms-2 text-muted"></label>
+                                    <textarea asp-for="Notes" class="form-control border-0 shadow"rows="3"> </textarea>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input type="file" name="file" class="form-control border-0 shadow" />
+                                <label asp-for="ImageUrl" class="ms-2"></label>
+                            </div>
+                            <div class="row pt-2">
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-primary form-control">
+                                        <i class="bi bi-person-plus pe-2"></i>
+                                         Додати до списку працівників</button>
+                                </div>
+                                <div class="col-6">
+                                    <a asp-controller="Employee" asp-action="Index" class="btn btn-outline-primary border form-control">
+                                        Повернутися до списку працівників
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="col-2">
+                    <img src="ImageUrl" width="100%"
+                     style="border-radius:5px; border:1px solid #bbb9b9" />
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+</div>
+
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

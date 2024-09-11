@@ -1,9 +1,10 @@
-using BMW_GarageWebApi.Models;
+using BMW_GarageWebApi.Domain.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace BMW_GarageWebApi.Controllers
+namespace BMW_GarageWebApi.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

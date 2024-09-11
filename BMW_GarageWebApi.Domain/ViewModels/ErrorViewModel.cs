@@ -1,4 +1,4 @@
-namespace BMW_GarageWebApi.Models
+namespace BMW_GarageWebApi.Domain.ViewModels
 {
     public class ErrorViewModel
     {
