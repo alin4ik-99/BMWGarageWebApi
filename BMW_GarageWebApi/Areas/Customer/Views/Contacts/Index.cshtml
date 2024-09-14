@@ -1,0 +1,117 @@
+﻿@using BMW_GarageWebApi.Domain.Models
+@model IEnumerable<Employee>
+<div class="row-cols-1 my-4 pt-lg-3 pb-lg-2 bg-light-subtle bg-gradient">
+    <p class="fs-1 text-dark text-center text-uppercase">Ласкаво  просимо  до  нашого  сервісу</p>
+</div>
+
+<div class="row">
+    <div class="col-6 pe-2 ps-4">
+        <div class="container">
+            <div class="row-cols-1 py-3 bg-dark bg-opacity-50 bg-gradient">
+                <p class="mb-0 text-light fs-4 text-center text-uppercase">Наші працівники</p>
+            </div>
+            @foreach (var obj in Model)
+            {
+
+                <div class="card border-0 p-4 shadow border-top rounded mt-3 mb-4" style="max-width: 1000px">
+                    <div class="card-header bg-secondary bg-gradient text-light py-2 mb-2">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <h3 class="text-dark text-uppercase">@obj.FullName</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-0">
+                        <div class="col-md-4 text-center">
+                            <img src="@obj.ImageUrl" class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body text-center">
+                                <p class="card-text fs-5">@obj.Notes</p>
+                                <hr />
+                                <h5 class="card-title mt-4">@obj.Email</h5>
+                                <h5 class="card-title text-body-secondary mt-2"><i class="bi bi-telephone"></i> @obj.PhoneNumber</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>               
+            }
+        </div>
+
+    </div>
+    <div class="col-6 pe-4 ps-2" >
+        <div class="container  " style="position: sticky; top:50px;">
+            <div class="row-cols-1 py-3 bg-dark bg-opacity-50 bg-gradient">
+                <p class="mb-0 text-light fs-4 text-center text-uppercase">Наші контакти</p>
+            </div>
+            <div class="card shadow border-0 mt-3 mb-4">
+                <div class="card-header bg-secondary bg-gradient text-light py-3">
+                    <div class="row">
+                        <div class="col-12  text-center ">
+                            <h3 class="pb-0 mb-1 text-dark text-uppercase">
+                                <img src="/images/logo.jpg" class="rounded-circle" style="width:60px; height:60px;" alt="logo">
+                                BMW Garage
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="py-1">
+                        <div class="row">
+                            <div class="col-6 text-center pt-2 pb-3">
+                                <div class=" rounded-1 bg-opacity-75">
+                                    <p class="text-center text-bg-info fs-5">Ми працюємо </p>
+                                    <h3 class="text-dark text-center mb-3">
+                                        Пн-Сб 07:00 - 20:00  
+                                    </h3>
+                                    <p class="text-center text-bg-info fs-5">Ми знаходимося </p>
+                                    <h4 class=" text-primary"> os.Witosa, Katowice, Polska</h4>
+                                </div>
+                            </div>
+                            <div class="col-6 mt-2">
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <button class="mb-2 text-center btn btn-danger btn-sm fs-5 rounded-1" style="width:190px; height:50px;" type="button">
+                                            <i class="bi bi-telephone"></i>
+                                            +48 794 046 951
+                                        </button>
+                                        <button class="mb-2 text-center btn btn-danger btn-sm fs-5 rounded-1" style="width:190px; height:50px;" type="button">
+                                            Записатися
+                                        </button>
+                                    </div>
+                            
+
+                                </div>
+                                       
+                                <p class="text-center text-dark">-----Знайди нас-----</p>
+                                <div class="d-inline-flex gap-1">
+                                    <button class="btn btn-sm btn-light p-1" type="button">
+                                        <img src="/images/logoSM/Facebook.png" class="" style="width:30px; height:30px;" alt="logo">
+                                        Facebook
+                                    </button>
+                                    <button class="btn btn-sm btn-light p-1" type="button">
+                                        <img src="/images/logoSM/instagram.png" class="" style="width:30px; height:30px;" alt="logo">
+                                        Instagram
+                                    </button>
+                                    <button class="btn btn-sm btn-light p-1" type="button">
+                                        <img src="/images/logoSM/telegram.jpg" class="" style="width:30px; height:30px;" alt="logo">
+                                        Telegram
+                                    </button>
+                                </div>
+                               
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+

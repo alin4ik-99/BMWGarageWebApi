@@ -15,19 +15,15 @@ namespace BMW_GarageWebApi.Domain.Models
 
         [Required]
         [Display(Name = "Назва послуги")]
-        public string TypeOfCarRepair { get; set; }
-
-
-        [Display(Name = "Опис послуги")]
-        public string Description { get; set; }
+        public string TypeOfCarRepair { get; set; } = string.Empty;
 
         [Required]
         [Display(Name = "Мінімальна ціна")]
-        public decimal PriceFrom { get; set; }
+        public double PriceFrom { get; set; }
 
 
         [Required]
         [Display(Name = "Максимальна ціна")]
-        public decimal PriceTo { get; set; }
+        public double PriceTo { get; set; }
     }
 }

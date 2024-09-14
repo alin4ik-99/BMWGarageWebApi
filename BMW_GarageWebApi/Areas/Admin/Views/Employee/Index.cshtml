@@ -1,5 +1,5 @@
 ﻿@using BMW_GarageWebApi.Domain.Models
-@model List<Employee>
+@model IEnumerable<Employee>
 
 <div class="container">
 
@@ -14,14 +14,25 @@
 
         <div class="card-body p-4">
             <div class="row  pb-3 ">
-                <div class="col-12 text-end">
+                <div class="col-5 text-start">
+                    <form asp-controller="Employee" asp-action="Index" class="d-flex" role="search">
+                        <div class="input-group">
+                            <input class="form-control border-2  border-dark shadow ps-3 me-1" type="search" placeholder="Введіть ПІБ для пошуку" aria-label="Search" name="SearchString">
+                            <button class="btn btn-outline-dark bg-gradient me-4" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                            <button class="btn btn-outline-dark bg-gradient" type="submit">Всі працівники</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-7 text-end">
                     <a asp-controller="Employee" asp-action="Create" class="btn btn-primary">
                         <i class="bi bi-plus-circle"></i> Додати нового працівника
                     </a>
                 </div>
             </div>
-            <div class="table-responsive fs-6">
-                    <table class="table table-sm table-bordered table-striped">
+            <div class="table-responsive table-sm fs-6" style="max-height:400px">
+                <table class="table table-sm table-bordered table-striped table-group-divider">
                         <thead>
                             <tr>
                                 <th> Повне ім'я (ПІБ) </th>
@@ -45,11 +56,11 @@
                                     <td> @obj.PhoneNumber </td>
                                     <td> @obj.Position </td>
                                     <td>
-                                        <div class="w-50 fs-6 btn-group" role="group">
-                                            <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-sm btn-primary mb-1 mx-1">
+                                        <div class=" fs-6 btn-group" role="group">
+                                            <a asp-controller="Employee" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-sm btn-primary bg-gradient me-1">
                                                 <i class="bi bi-pencil-square"></i> Редагувати
                                             </a>
-                                        <a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-sm btn-danger mb-1 mx-1">
+                                            <a asp-controller="Employee" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-sm btn-danger">
                                                 <i class="bi bi-trash-fill"></i> Видалити
                                             </a>
                                         </div>

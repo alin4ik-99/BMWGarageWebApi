@@ -19,11 +19,25 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
             _unitOfWork = unitOfWork;
             _webHostEnvironment = webHostEnvironment;
         }
-        public IActionResult Index()
+
+        public IActionResult Index(string searchString)
         {
-            var objEmployeeList = _unitOfWork.Employee.GetAll().ToList();
+            var objEmployeeList = _unitOfWork.Employee.GetAll();
+
+            if (objEmployeeList == null)
+            {
+                return Problem("Entity set 'objEmployeeList'  is null.");
+            }
+
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                objEmployeeList = objEmployeeList.Where(s => s.FullName!.ToUpper().Contains(searchString.ToUpper()));
+            }
+
             return View(objEmployeeList);
         }
+
 
         public IActionResult Create()
         {
@@ -55,7 +69,7 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
 
                 _unitOfWork.Employee.Add(obj);
                 _unitOfWork.Save();
-                TempData["success"] = "Category created successfully";
+                TempData["success"] = "Employee created successfully";
                 return RedirectToAction("Index");
             }
             return View();
@@ -81,11 +95,39 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
 
 
         [HttpPost]
-        public IActionResult Edit(Employee obj)
+        public IActionResult Edit(Employee obj, IFormFile? file)
         {
 
             if (ModelState.IsValid)
             {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if (file != null)
+                {
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string employeePath = Path.Combine(wwwRootPath, @"images\employee");
+
+                    if (!string.IsNullOrEmpty(obj.ImageUrl))
+                    {
+                        //delete the old image
+                        var oldImagePath = Path.Combine(wwwRootPath, obj.ImageUrl.TrimStart('\\'));
+
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
+                    using (var fileStream = new FileStream(Path.Combine(employeePath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    obj.ImageUrl = @"\images\employee\" + fileName;
+
+                }
+
+
+
                 _unitOfWork.Employee.Update(obj);
                 _unitOfWork.Save();
                 TempData["success"] = "Employee updated successfully";
@@ -123,6 +165,14 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, obj.ImageUrl.TrimStart('\\'));
+
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
             _unitOfWork.Employee.Remove(obj);
             _unitOfWork.Save();
             TempData["success"] = "Employee deleted successfully";

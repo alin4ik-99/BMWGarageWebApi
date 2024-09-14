@@ -24,8 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Views\CarRepair\" />
-    <Folder Include="Areas\Admin\Views\CarRecord\" />
     <Folder Include="wwwroot\images\employee\" />
   </ItemGroup>
 

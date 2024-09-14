@@ -1,4 +1,6 @@
 ﻿using BMW_GarageWebApi.Domain.Enum;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,32 +19,35 @@ namespace BMW_GarageWebApi.Domain.Models
         [Required]
         [MaxLength(40)]
         [Display(Name = "Повне ім'я (ПІБ)")]
-        public string FullName { get; set; }
+        public string ?FullName { get; set; }
 
         [Required]
-        public string Email { get; set; }
+        public string ?Email { get; set; }
 
         [Required]
         [Display(Name = "Номер телефону")]
-        public string PhoneNumber { get; set; }
+        public string ?PhoneNumber { get; set; }
 
 
         [Display(Name = "Опис")]
-        public string Description { get; set; }
+        public string ?Description { get; set; }
 
         [Required]
         [Display(Name = "Дата візиту")]
+        [BindProperty]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateOnly DateOfVisit { get; set; }
 
         [Required]
         [Display(Name = "Статус підтвердження")]
-        public StatusCarRecord StatusCarRecord{ get; set; } = StatusCarRecord.NotConfirmed;
+        public StatusCarRecord StatusCarRecord{ get; set; }
 
 
-
+        [Display(Name = "Працівник сервісу")]
         public int EmployeeId { get; set; }
         [ForeignKey("EmployeeId")]
-        public Employee Employee { get; set; }
+        [ValidateNever]
+        public Employee ?Employee { get; set; }
 
     }
 }

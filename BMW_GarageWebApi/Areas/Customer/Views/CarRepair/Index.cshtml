@@ -1,0 +1,57 @@
+﻿@using BMW_GarageWebApi.Domain.Models
+@model IEnumerable<CarRepair>
+
+<div class="container">
+
+    <div class="card shadow border-0 mt-4 pb-4">
+        <div class="card-header bg-primary bg-gradient pt-4">
+            <div class="row pb-3">
+                <div class="col-7 text-start ps-5">
+                    <h2 class="text-white m-0">ПОСЛУГИ</h2>
+                </div>
+                <div class="col-5 text-end">
+                    <form asp-controller="CarRepair" asp-action="Index" class="d-flex" role="search">
+                        <div class="input-group">
+                            <input class="form-control  border-2 shadow" type="search" placeholder="Пошук" aria-label="Search" name="SearchString">
+                            <button class="btn btn-dark bg-gradient me-2" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                            <button class="btn btn-dark bg-gradient" type="submit">Всі послуги</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="card-body p-4">
+           
+            <div class="table-responsive " style="max-height:400px">
+                <table class="table table-sm table-bordered table-striped table-group-divider text-center fs-5">
+                        <thead >
+                            <tr > 
+                                <th class=" fs-5"> Назва послуги</th>
+                                <th class="fs-5"> Мінімальна ціна</th>
+                                <th class="fs-5"> Максимальна ціна</th>   
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var obj in Model)
+                            {
+                                <tr>
+                                    <td> @obj.TypeOfCarRepair </td>
+                                    <td> @obj.PriceFrom грн. </td>
+                                    <td> @obj.PriceTo грн. </td>
+                                                                 
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+             </div>  
+        </div>
+    </div>
+
+</div>
+
+

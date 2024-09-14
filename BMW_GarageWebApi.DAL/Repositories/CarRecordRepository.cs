@@ -21,7 +21,18 @@ namespace BMW_GarageWebApi.DAL.Repositories
 
         public void Update(CarRecord obj)
         {
-            _db.CarRecords.Update(obj);
+            var objFromDb = _db.CarRecords.FirstOrDefault(p => p.Id == obj.Id);
+            if (objFromDb != null)
+            {
+                objFromDb.FullName = obj.FullName;
+                objFromDb.Email = obj.Email;
+                objFromDb.PhoneNumber = obj.PhoneNumber;
+                objFromDb.Description = obj.Description;
+                objFromDb.DateOfVisit = obj.DateOfVisit;
+                objFromDb.StatusCarRecord = obj.StatusCarRecord;
+                objFromDb.EmployeeId = obj.EmployeeId;
+
+            }
         }
     }
 }

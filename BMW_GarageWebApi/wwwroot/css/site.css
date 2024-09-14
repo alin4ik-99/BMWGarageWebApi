@@ -18,6 +18,6 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
-  background: linear-gradient(to top left, #ffffff, #b3feff, #9bfcef);
+    margin-bottom: 60px;
+    background: linear-gradient(to top left, #e6e6e6, #fbfbfb,#e6e6e6);
 }

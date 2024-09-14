@@ -71,6 +71,32 @@ namespace BMW_GarageWebApi.DAL.Data
                 }
             );
 
+            modelBuilder.Entity<CarRepair>().HasData(
+               new CarRepair
+               {
+                   Id = 1,
+                   TypeOfCarRepair = "Діагностика кондиціонера",
+                   PriceFrom = 700,
+                   PriceTo = 900
+
+
+               },
+               new CarRepair
+               {
+                   Id = 2,
+                   TypeOfCarRepair = "Діагностика ДВЗ",
+                   PriceFrom = 400,
+                   PriceTo = 1000
+               },
+
+               new CarRepair
+               {
+                   Id = 3,
+                   TypeOfCarRepair = "Комп'ютерна діагностика",
+                   PriceFrom = 800,
+                   PriceTo = 1000
+               }
+           );
 
 
             modelBuilder.Entity<Employee>().HasData(

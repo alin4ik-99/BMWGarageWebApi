@@ -1,0 +1,80 @@
+﻿@using BMW_GarageWebApi.Domain.Models
+@model IEnumerable<CarRecord>
+
+<div class="container">
+
+    <div class="card shadow border-0 mt-4">
+        <div class="card-header bg-primary bg-gradient ml-0 py-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="text-white py-2">ЗАПИСИ</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-4">
+            <div class="row  pb-3 ">
+                <div class="col-5 text-start">
+                    <form asp-controller="CarRecord" asp-action="Index" class="d-flex" role="search">
+                        <div class="input-group">
+                            <input class="form-control border-2  border-dark shadow me-1" type="search" placeholder="Введіть ПІБ для пошуку" aria-label="Search" name="SearchString">
+                            <button class="btn btn-outline-dark bg-gradient me-4" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                            <button class="btn btn-outline-dark bg-gradient" type="submit">Всі записи</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-7 text-end">
+                    <a asp-controller="CarRecord" asp-action="Create" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Додати новий запис
+                    </a>
+                </div>
+            </div>
+            <div class="table-responsive table-sm fs-6" style="max-height:400px">
+                    <table class="table table-sm table-bordered table-striped table-group-divider text-center">
+                        <thead>
+                            <tr>
+                                <th> Повне ім'я (ПІБ)</th>
+                                <th> Email</th>
+                                <th> Номер телефону</th>
+                                <th> Опис послуг</th>
+                                <th> Дата візиту</th>
+                                <th> Працівник сервісу</th>
+                                <th> Статус підтвердження</th>
+                                <th> </th>  
+                             </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var obj in Model)
+                            {
+                                <tr>
+                                    <td> @obj.FullName </td>
+                                    <td> @obj.Email</td>
+                                    <td> @obj.PhoneNumber</td>
+                                    <td> @obj.Description</td>
+                                    <td> @obj.DateOfVisit</td>
+                                    <td> @obj.Employee.FullName</td>
+                                    <td> @obj.StatusCarRecord</td>
+                                  
+                                    <td>
+                                        <div class=" btn-group" role="group">
+                                            <a asp-controller="CarRecord" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-sm btn-primary bg-gradient mb-1 mx-1">
+                                                <i class="bi bi-pencil-square"></i> Редагувати
+                                            </a>
+                                            <a asp-controller="CarRecord" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-sm btn-danger mb-1 mx-1">
+                                                <i class="bi bi-trash-fill"></i> Видалити
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+             </div>  
+        </div>
+    </div>
+
+</div>
+
+

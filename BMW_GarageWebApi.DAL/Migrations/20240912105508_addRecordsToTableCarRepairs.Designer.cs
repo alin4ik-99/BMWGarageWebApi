@@ -4,6 +4,7 @@ using BMW_GarageWebApi.DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BMW_GarageWebApi.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240912105508_addRecordsToTableCarRepairs")]
+    partial class addRecordsToTableCarRepairs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,11 +110,11 @@ namespace BMW_GarageWebApi.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<double>("PriceFrom")
-                        .HasColumnType("float");
+                    b.Property<decimal>("PriceFrom")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<double>("PriceTo")
-                        .HasColumnType("float");
+                    b.Property<decimal>("PriceTo")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("TypeOfCarRepair")
                         .IsRequired()
@@ -125,22 +128,22 @@ namespace BMW_GarageWebApi.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            PriceFrom = 700.0,
-                            PriceTo = 900.0,
+                            PriceFrom = 700m,
+                            PriceTo = 900m,
                             TypeOfCarRepair = "Діагностика кондиціонера"
                         },
                         new
                         {
                             Id = 2,
-                            PriceFrom = 400.0,
-                            PriceTo = 1000.0,
+                            PriceFrom = 400m,
+                            PriceTo = 1000m,
                             TypeOfCarRepair = "Діагностика ДВЗ"
                         },
                         new
                         {
                             Id = 3,
-                            PriceFrom = 800.0,
-                            PriceTo = 1000.0,
+                            PriceFrom = 800m,
+                            PriceTo = 1000m,
                             TypeOfCarRepair = "Комп'ютерна діагностика"
                         });
                 });

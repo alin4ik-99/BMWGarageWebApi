@@ -1,0 +1,59 @@
+﻿@using BMW_GarageWebApi.Domain.Models
+@model CarRepair
+
+
+<div class="container">
+    <div class="card shadow border-0 mt-4">
+        <div class="card-header bg-primary bg-gradient ml-0 py-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="text-white py-2">Видалити послугу</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-4">
+            <form method="post" class="row">
+                <input asp-for="Id" hidden />
+             
+                        <div class="border p-3">
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="TypeOfCarRepair" disabled class="form-control border-0 shadow" />
+                                <label asp-for="TypeOfCarRepair" class="ms-2"></label>                              
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="PriceFrom" disabled class="form-control border-0 shadow" />
+                                <label asp-for="PriceFrom" class="ms-2"></label>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="PriceTo" disabled class="form-control border-0 shadow" />
+                                <label asp-for="PriceTo" class="ms-2"></label>
+                            </div>
+                         
+                            <div class="row pt-2">
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-danger form-control">
+                                        <i class="bi bi-trash-fill pe-2"></i>
+                                        Видалити
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <a asp-controller="CarRepair" asp-action="Index" class="btn btn-outline-primary border form-control">
+                                        Повернутися до списку послуг
+                                    </a>
+                                </div>
+                            </div>
+                        </div>          
+            </form>
+        </div>
+
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
