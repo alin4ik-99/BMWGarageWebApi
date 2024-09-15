@@ -19,18 +19,18 @@ namespace BMW_GarageWebApi.Domain.Models
         [Required]
         [MaxLength(40)]
         [Display(Name = "Повне ім'я (ПІБ)")]
-        public string ?FullName { get; set; }
+        public string? FullName { get; set; }
 
         [Required]
-        public string ?Email { get; set; }
+        public string? Email { get; set; }
 
         [Required]
         [Display(Name = "Номер телефону")]
-        public string ?PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
 
 
         [Display(Name = "Опис послуг")]
-        public string ?Description { get; set; }
+        public string? Description { get; set; }
 
         [Required]
         [Display(Name = "Дата візиту")]
@@ -44,10 +44,11 @@ namespace BMW_GarageWebApi.Domain.Models
 
 
         [Display(Name = "Працівник сервісу")]
+        [Required]
         public int EmployeeId { get; set; }
         [ForeignKey("EmployeeId")]
         [ValidateNever]
-        public Employee ?Employee { get; set; }
+        public Employee? Employee { get; set; }
 
     }
 }

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -14,18 +15,18 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-2">
+        <nav class="navbar navbar-expand navbar-dark bg-primary border-bottom box-shadow mb-2">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="Customer" asp-controller="Home" asp-action="Index">
                     <img src="/images/logo.jpg" class="rounded-circle" style="width:50px; height:50px;" alt="logo">
-                    BMW Garage</a>
+                         BMW Garage
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        
-                            <span class="navbar-toggler-icon"></span>
+                    aria-expanded="false" aria-label="Toggle navigation">                      
+                    <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav me-auto">
                         <li class="nav-item">
                             <a class="nav-link fs-5" asp-area="Customer" asp-controller="Home" asp-action="Index">Головна</a>
                         </li>
@@ -35,40 +36,41 @@
                         <li class="nav-item">
                             <a class="nav-link fs-5" asp-area="Customer" asp-controller="Contacts" asp-action="Index">Контакти</a>
                         </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Управління даними
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item">
-                                    <a class="dropdown-item" asp-area="Admin" asp-controller="CarRepair" asp-action="Index">Послуги</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="dropdown-item" asp-area="Admin" asp-controller="CarRecord" asp-action="Index">Записи</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Employee" asp-action="Index">Працівники</a>
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                            </ul>
-                        </li>
+                        @if(User.IsInRole(SD.Role_Admin)){
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Управління даними
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="CarRepair" asp-action="Index">Послуги</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="CarRecord" asp-action="Index">Записи</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Employee" asp-action="Index">Працівники</a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                </ul>
+                            </li>
+                        }
                     </ul>
+                    <div class="my-0 rounded-1 text-light" style="width:200px; height:70px;">
+                        <p class="text-light text-center mb-1 fs-6 pe-2">
+                            Пн-Сб 07:00 - 20:00
+                            <small class="" style="color:lightgray;">
+                                os.Witosa, Katowice, Polska 
+                            </small>
+                            <h6 class="bg-danger rounded-1 fs-6 p-1 text-center" style="color:white;">
+                                <i class="bi bi-telephone"></i>
+                                +48 794 046 951
+                            </h6>
+                        </p>
+                    </div>
+                    <partial name="_LoginPartial"/>
                 </div>         
-            </div>
-                 <form class="container-fluid justify-content-end">
-                        <div class=" pe-3 rounded-1 bg-opacity-75 text-light" style="width:250px;"> 
-                            <h5 class="text-light text-center">
-                                Пн-Сб 07:00 - 20:00
-                            <small class="" style="color:lightgray;">os.Witosa, Katowice, Polska</small>
-                            </h5>
-                        </div>
-                        <button class=" btn btn-danger btn-sm fs-5 rounded-1" style="width:190px; height:50px;" type="button">
-                            <i class="bi bi-telephone"></i>
-                            +48 794 046 951
-                        </button>
-                 </form>
-
+            </div>                 
         </nav>
     </header>
 

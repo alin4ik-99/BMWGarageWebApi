@@ -11,8 +11,8 @@ namespace BMW_GarageWebApi.Domain.ViewModels
 {
     public class CarRecordVM
     {
-        public CarRecord ?CarRecord { get; set; }
+        public CarRecord? CarRecord { get; set; }
         [ValidateNever]
-        public IEnumerable<SelectListItem> ?EmployeeList { get; set; }
+        public IEnumerable<SelectListItem>? EmployeeList { get; set; }
     }
 }
