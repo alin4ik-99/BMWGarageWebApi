@@ -1,12 +1,15 @@
 ﻿using BMW_GarageWebApi.DAL.Interfaces;
 using BMW_GarageWebApi.Domain.Models;
 using BMW_GarageWebApi.Domain.ViewModels;
+using BMW_GarageWebApi.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BMW_GarageWebApi.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class CarRecordController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

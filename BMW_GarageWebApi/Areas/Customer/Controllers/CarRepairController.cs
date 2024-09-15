@@ -1,4 +1,6 @@
 ﻿using BMW_GarageWebApi.DAL.Interfaces;
+using BMW_GarageWebApi.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
