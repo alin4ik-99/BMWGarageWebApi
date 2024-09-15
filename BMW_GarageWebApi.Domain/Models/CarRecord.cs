@@ -29,7 +29,7 @@ namespace BMW_GarageWebApi.Domain.Models
         public string ?PhoneNumber { get; set; }
 
 
-        [Display(Name = "Опис")]
+        [Display(Name = "Опис послуг")]
         public string ?Description { get; set; }
 
         [Required]
@@ -40,7 +40,7 @@ namespace BMW_GarageWebApi.Domain.Models
 
         [Required]
         [Display(Name = "Статус підтвердження")]
-        public StatusCarRecord StatusCarRecord{ get; set; }
+        public StatusCarRecord StatusCarRecord{ get; set; } = StatusCarRecord.NotConfirmed; 
 
 
         [Display(Name = "Працівник сервісу")]

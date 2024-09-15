@@ -2,19 +2,20 @@
 @model CarRecordVM
 
 
-<div class="container w-75 mb-3">
-    <div class="card shadow border-0 mt-4">
+<div class="container-sm w-50 mb-3">
+    <div class="card shadow border-0 mt-4 ">
             <div class="card-header bg-primary bg-gradient ml-0 py-3">
                 <div class="row">
                     <div class="col-12 text-center">
-                        <h2 class="text-white py-2">Додати новий запис</h2>
+                        <h2 class="text-white py-2">Запис до нашого автосервісу</h2>
                     </div>
                 </div>
             </div>
 
-        <div class="card-body p-4">
+        <div class="card-body  p-4">
             <form method="post" class="row">
                 <input asp-for="CarRecord.Id" hidden />
+                <input asp-for="CarRecord.StatusCarRecord" hidden />
                             <div class="border p-3">                           
                                 <div class="form-floating py-2 col-12">
                                     <input asp-for="CarRecord.FullName" class="form-control border-0 shadow" />
@@ -37,34 +38,27 @@
                                         <input type="date"  class="form-control border-0 shadow" asp-for="CarRecord.DateOfVisit"/>
                                     </div>
                                     <div class="col-6">
-                                         <label asp-for="CarRecord.StatusCarRecord" class="ms-2"></label>
-                                        <select asp-for="CarRecord.StatusCarRecord" class="form-select border-0 shadow">
-                                            <option disabled selected>---Обрати статус підтвердження---</option>
-                                            <option value="Confirmed">Запис підтверджено</option>
-                                            <option value="NotConfirmed">Запис не підтверджено</option>
-                                        </select>                                   
-                                        <span asp-validation-for="CarRecord.StatusCarRecord" class="text-danger"></span>                                  
-                                    </div>
+                                        <label asp-for="CarRecord.EmployeeId" class="ms-2"></label>
+                                        <select asp-for="CarRecord.EmployeeId" asp-items="Model.EmployeeList" class="form-select border-0 shadow">
+                                            <option disabled selected>---Вибір працівника сервісу---</option>
+                                        </select>                                                           
+                                    </div>   
                                 </div>                          
                                 <div class="form-floating py-2 col-12">
                                     <label asp-for="CarRecord.Description" class="ms-2 text-muted"></label>
                                     <textarea asp-for="CarRecord.Description" class="form-control border-0 shadow" rows="3"> </textarea>
                                 </div>
-                                <div class="form-floating py-2 col-12">
-                                    <select asp-for="CarRecord.EmployeeId" asp-items="Model.EmployeeList" class="form-select border-0 shadow">
-                                        <option disabled selected>---Вибір працівника сервісу---</option>
-                                    </select>                                                           
-                                </div>                                                     
+                                                                                  
                                 <div class="row pt-2">
                                     <div class="col-6">
                                         <button type="submit" class="btn btn-primary form-control">
                                              <i class="bi bi-plus-circle pe-2"></i> 
-                                             Додати до всіх записів
+                                             Підтвердити запис
                                         </button>
                                     </div>
                                     <div class="col-6">
-                                        <a asp-controller="CarRecord" asp-action="Index" class="btn btn-outline-primary border form-control">
-                                            Повернутися до списку записів
+                                        <a asp-area="Customer" asp-controller="Home" asp-action="Index" class="btn btn-outline-primary border form-control">
+                                            Відмінити запис
                                         </a>
                                     </div>
                                 </div>
