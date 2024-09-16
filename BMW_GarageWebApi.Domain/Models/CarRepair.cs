@@ -1,10 +1,4 @@
-﻿using BMW_GarageWebApi.Domain.Enum;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BMW_GarageWebApi.Domain.Models
 {
@@ -19,11 +13,10 @@ namespace BMW_GarageWebApi.Domain.Models
 
         [Required]
         [Display(Name = "Мінімальна ціна")]
-        public double PriceFrom { get; set; }
-
+        public decimal PriceMin { get; set; }
 
         [Required]
         [Display(Name = "Максимальна ціна")]
-        public double PriceTo { get; set; }
+        public decimal PriceMax { get; set; }
     }
 }

@@ -66,7 +66,6 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
             {
    
                 _unitOfWork.CarRecord.Add(carRecordVM.CarRecord);
-                _unitOfWork.Save();
                 TempData["success"] = "Запис успішно створено";
                 return RedirectToAction("Index");
             }
@@ -119,8 +118,6 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
             {
                 _unitOfWork.CarRecord.Update(carRecordVM.CarRecord);
 
-
-                _unitOfWork.Save();
                 TempData["success"] = "Запис успішно оновлено";
                 return RedirectToAction("Index");
             }
@@ -173,7 +170,6 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
             }
 
             _unitOfWork.CarRecord.Remove(obj);
-            _unitOfWork.Save();
             TempData["success"] = "Запис успішно видалено";
             return RedirectToAction("Index");
 

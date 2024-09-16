@@ -22,6 +22,7 @@ namespace BMW_GarageWebApi.DAL.Repositories
         public void Update(CarRepair obj)
         {
             _db.CarRepairs.Update(obj);
+            _db.SaveChanges();
         }
     }
 }

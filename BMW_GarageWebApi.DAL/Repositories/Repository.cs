@@ -19,12 +19,13 @@ namespace BMW_GarageWebApi.DAL.Repositories
         public Repository(ApplicationDbContext db)
         {
             _db = db;
-            this.dbSet = _db.Set<T>();
+            dbSet = _db.Set<T>();
             _db.CarRecords.Include(u => u.Employee).Include(u => u.EmployeeId);
         }
         public void Add(T entity)
         {
             dbSet.Add(entity);
+            _db.SaveChanges();
         }
 
         public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
@@ -56,17 +57,19 @@ namespace BMW_GarageWebApi.DAL.Repositories
                 }
             }
 
-            return query.ToList();
+            return query;
         }
 
         public void Remove(T entity)
         {
             dbSet.Remove(entity);
+            _db.SaveChanges();
         }
 
         public void RemoveRange(IEnumerable<T> entity)
         {
             dbSet.RemoveRange(entity);
+            _db.SaveChanges();
         }
     }
 }

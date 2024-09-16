@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 using BMW_GarageWebApi.Domain.Enum;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
@@ -25,6 +19,7 @@ namespace BMW_GarageWebApi.Domain.Models
         [Display(Name = "Дата народження")]
         [BindProperty]
         public DateOnly DateOfBirth { get; set; }
+
         [Required]
         [Display(Name = "Дата початку співпраці")]
         [BindProperty]
@@ -45,12 +40,12 @@ namespace BMW_GarageWebApi.Domain.Models
         [MaxLength(30)]
         [Display(Name = "Посада")]
         public string Position { get; set; } = string.Empty;
+
         [ValidateNever]
         public string ImageUrl { get; set; } = string.Empty;
 
         [Display(Name = "Характеристика")]
         public string Notes { get; set; } = string.Empty;
-
 
     }
 }

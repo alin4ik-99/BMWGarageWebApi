@@ -1,7 +1,6 @@
 ﻿@using BMW_GarageWebApi.Domain.Models
 @model Employee
 
-
 <div class="container w-75 mb-3">
     <div class="card shadow border-0 mt-4">
         <div class="card-header bg-primary bg-gradient ml-0 py-3">
@@ -9,11 +8,8 @@
                 <div class="col-12 text-center">
                     <h2 class="text-white py-2">Редагувати дані працівника</h2>
                 </div>
-
             </div>
-
         </div>
-
         <div class="card-body p-4">
             <form method="post" class="row" enctype="multipart/form-data">
                 <input asp-for="Id" hidden />
@@ -27,9 +23,7 @@
                                 <label asp-for="FullName" class="ms-2"></label>
                                 <span asp-validation-for="FullName" class="text-danger"></span>
                             </div>
-
                             <div class="row form-floating py-2 ">
-
                                 <div class="col-6">
                                     <label asp-for="DateOfBirth" class="ms-2"></label>
                                     <input type="date" id="DateOfBirth" name="DateOfBirth" class="form-control" asp-for="DateOfBirth" asp-format="{0:yyyy-MM-dd}" />
@@ -38,9 +32,7 @@
                                     <label asp-for="DateOfHiring" class="ms-2"></label>
                                     <input type="date" id="DateOfHiring" name="DateOfHiring" class="form-control" asp-for="DateOfHiring" asp-format="{0:yyyy-MM-dd}" />
                                 </div>
-
                             </div>
-
                             <div class="form-floating py-2 col-12">
                                 <select asp-for="Gender" class="form-select border-0 shadow">
                                     <option disabled selected>Обрати стать людини</option>

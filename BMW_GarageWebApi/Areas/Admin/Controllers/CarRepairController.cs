@@ -50,7 +50,6 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 _unitOfWork.CarRepair.Add(obj);
-                _unitOfWork.Save();
                 TempData["success"] = "Нова послуга успішно створена";
                 return RedirectToAction("Index");
             }
@@ -84,7 +83,6 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
             {
           
                 _unitOfWork.CarRepair.Update(obj);
-                _unitOfWork.Save();
                 TempData["success"] = "Послуга успішно оновлена";
                 return RedirectToAction("Index");
             }
@@ -122,7 +120,6 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
             }
 
             _unitOfWork.CarRepair.Remove(obj);
-            _unitOfWork.Save();
             TempData["success"] = "Послуга успішно видалена";
             return RedirectToAction("Index");
 

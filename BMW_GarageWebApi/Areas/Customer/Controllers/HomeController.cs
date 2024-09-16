@@ -67,7 +67,7 @@ namespace BMW_GarageWebApi.Areas.Customer.Controllers
             {
 
                 _unitOfWork.CarRecord.Add(carRecordVM.CarRecord);
-                _unitOfWork.Save();
+
                 TempData["success"] = "Вітаємо! Запис успішно створено. Ми зв'яжемося з Вами найближчим часом. Дякуємо, що обрали нас!";
                 return RedirectToAction("Index");
             }
