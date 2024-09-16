@@ -1,7 +1,6 @@
 ﻿@using BMW_GarageWebApi.Domain.Models
 @model CarRecordVM
 
-
 <div class="container-sm w-50 mb-3">
     <div class="card shadow border-0 mt-4 ">
             <div class="card-header bg-primary bg-gradient ml-0 py-3">
@@ -11,7 +10,6 @@
                     </div>
                 </div>
             </div>
-
         <div class="card-body  p-4">
             <form method="post" class="row">
                 <input asp-for="CarRecord.Id" hidden />
@@ -48,8 +46,7 @@
                                 <div class="form-floating py-2 col-12">
                                     <label asp-for="CarRecord.Description" class="ms-2 text-muted"></label>
                                     <textarea asp-for="CarRecord.Description" class="form-control border-0 shadow" rows="3"> </textarea>
-                                </div>
-                                                                                  
+                                </div>                                                                                
                                 <div class="row pt-2">
                                     <div class="col-6">
                                         <button type="submit" class="btn btn-primary form-control">

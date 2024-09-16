@@ -69,7 +69,6 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
                 }
 
                 _unitOfWork.Employee.Add(obj);
-                _unitOfWork.Save();
                 TempData["success"] = "Employee created successfully";
                 return RedirectToAction("Index");
             }
@@ -130,7 +129,6 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
 
 
                 _unitOfWork.Employee.Update(obj);
-                _unitOfWork.Save();
                 TempData["success"] = "Employee updated successfully";
                 return RedirectToAction("Index");
             }
@@ -175,7 +173,6 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
             }
 
             _unitOfWork.Employee.Remove(obj);
-            _unitOfWork.Save();
             TempData["success"] = "Employee deleted successfully";
             return RedirectToAction("Index");
 

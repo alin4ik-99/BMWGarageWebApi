@@ -26,9 +26,5 @@ namespace BMW_GarageWebApi.DAL.Repositories
             Employee = new EmployeeRepository(_db);
         }
 
-        public void Save()
-        {
-            _db.SaveChanges();
-        }
     }
 }
