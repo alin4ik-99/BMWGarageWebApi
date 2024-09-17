@@ -1,4 +1,5 @@
-﻿using BMW_GarageWebApi.DAL.Interfaces;
+﻿using BMW_GarageWebApi.BLL.Interfaces;
+using BMW_GarageWebApi.DAL.Interfaces;
 using BMW_GarageWebApi.Domain.Models;
 using BMW_GarageWebApi.Utility;
 using Microsoft.AspNetCore.Authorization;
@@ -9,15 +10,15 @@ namespace BMW_GarageWebApi.Areas.Customer.Controllers
     [Area("Customer")]
     public class ContactsController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IEmployeeService _employeeService;
 
-        public ContactsController(IUnitOfWork unitOfWork)
+        public ContactsController(IEmployeeService employeeService)
         {
-            _unitOfWork = unitOfWork;
+            _employeeService = employeeService;
         }
         public IActionResult Index()
         {
-            IEnumerable<Employee> objEmployeeList = _unitOfWork.Employee.GetAll().ToList();
+            var objEmployeeList = _employeeService.GetAllEmployee();
             return View(objEmployeeList);
         }
     }

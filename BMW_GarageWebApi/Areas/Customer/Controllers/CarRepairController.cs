@@ -1,4 +1,5 @@
-﻿using BMW_GarageWebApi.DAL.Interfaces;
+﻿using BMW_GarageWebApi.BLL.Interfaces;
+using BMW_GarageWebApi.DAL.Interfaces;
 using BMW_GarageWebApi.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,21 +10,15 @@ namespace BMW_GarageWebApi.Areas.Customer.Controllers
     [Area("Customer")]
     public class CarRepairController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public CarRepairController(IUnitOfWork unitOfWork)
+        private readonly ICarRepairService _carRepairService;
+        public CarRepairController(ICarRepairService carRepairService)
         {
-            _unitOfWork = unitOfWork;
+            _carRepairService = carRepairService;
         }
 
         public IActionResult Index(string searchString)
         {
-            var objCarRepairList = _unitOfWork.CarRepair.GetAll();
-
-            if (objCarRepairList == null)
-            {
-                return Problem("Entity set 'CarRepair'  is null.");
-            }
-
+            var objCarRepairList = _carRepairService.GetAllCarRepair();
 
             if (!String.IsNullOrEmpty(searchString))
             {

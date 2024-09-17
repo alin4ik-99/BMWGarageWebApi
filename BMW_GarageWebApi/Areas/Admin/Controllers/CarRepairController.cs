@@ -1,4 +1,5 @@
-﻿using BMW_GarageWebApi.DAL.Interfaces;
+﻿using BMW_GarageWebApi.BLL.Interfaces;
+using BMW_GarageWebApi.DAL.Interfaces;
 using BMW_GarageWebApi.Domain.Models;
 using BMW_GarageWebApi.Utility;
 using Microsoft.AspNetCore.Authorization;
@@ -11,21 +12,15 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
     [Authorize(Roles = SD.Role_Admin)]
     public class CarRepairController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public CarRepairController(IUnitOfWork unitOfWork)
+        private readonly ICarRepairService _carRepairService;
+        public CarRepairController(ICarRepairService carRepairService)
         {
-            _unitOfWork = unitOfWork;
+            _carRepairService = carRepairService;
         }
 
         public IActionResult Index(string searchString)
         {
-            var objCarRepairList = _unitOfWork.CarRepair.GetAll();
-
-            if (objCarRepairList == null)
-            {
-                return Problem("Entity set 'CarRepair'  is null.");
-            }
-
+            var objCarRepairList = _carRepairService.GetAllCarRepair();
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -38,7 +33,6 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
 
         public IActionResult Create()
         {
-
             return View();
         }
 
@@ -49,7 +43,7 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                _unitOfWork.CarRepair.Add(obj);
+                _carRepairService.AddCarRepair(obj);
                 TempData["success"] = "Нова послуга успішно створена";
                 return RedirectToAction("Index");
             }
@@ -57,21 +51,21 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
         }
 
 
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int id)
         {
             if (id == null || id == 0)
             {
                 return NotFound();
             }
 
-            var CarRepairFromDb = _unitOfWork.CarRepair.Get(u => u.Id == id);
+            var carRepairFromDb = _carRepairService.GetCarRepair(id);
 
-            if (CarRepairFromDb == null)
+            if (carRepairFromDb == null)
             {
                 return NotFound();
             }
 
-            return View(CarRepairFromDb);
+            return View(carRepairFromDb);
         }
 
 
@@ -81,8 +75,8 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-          
-                _unitOfWork.CarRepair.Update(obj);
+
+                _carRepairService.UpdateCarRepair(obj);
                 TempData["success"] = "Послуга успішно оновлена";
                 return RedirectToAction("Index");
             }
@@ -91,38 +85,30 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
 
 
 
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(int id)
         {
             if (id == null || id == 0)
             {
                 return NotFound();
             }
 
-            var CarRepairFromDb = _unitOfWork.CarRepair.Get(u => u.Id == id);
+            var carRepairFromDb = _carRepairService.GetCarRepair(id);
 
-            if (CarRepairFromDb == null)
+            if (carRepairFromDb == null)
             {
                 return NotFound();
             }
 
-            return View(CarRepairFromDb);
+            return View(carRepairFromDb);
         }
 
 
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePOST(int? id)
+        public IActionResult DeletePOST(int id)
         {
-            var obj = _unitOfWork.CarRepair.Get(u => u.Id == id);
-
-            if (obj == null)
-            {
-                return NotFound();
-            }
-
-            _unitOfWork.CarRepair.Remove(obj);
+            _carRepairService.RemoveCarRepair(id);
             TempData["success"] = "Послуга успішно видалена";
             return RedirectToAction("Index");
-
         }
     }
 }

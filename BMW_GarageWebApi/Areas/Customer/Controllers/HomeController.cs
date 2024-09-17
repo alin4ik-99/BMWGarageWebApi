@@ -1,11 +1,9 @@
-﻿using BMW_GarageWebApi.DAL.Interfaces;
-using BMW_GarageWebApi.Domain.Models;
-using BMW_GarageWebApi.Domain.ViewModels;
-using BMW_GarageWebApi.Utility;
-using Microsoft.AspNetCore.Authorization;
+﻿using BMW_GarageWebApi.Domain.Models;
+using BMW_GarageWebApi.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
+using BMW_GarageWebApi.BLL.Interfaces;
 
 namespace BMW_GarageWebApi.Areas.Customer.Controllers
 {
@@ -13,11 +11,13 @@ namespace BMW_GarageWebApi.Areas.Customer.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IUnitOfWork _unitOfWork;
-        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
+        private readonly ICarRecordService _carRecordService;
+        private readonly IEmployeeService _employeeService;
+        public HomeController(ILogger<HomeController> logger,  ICarRecordService carRecordService, IEmployeeService employeeService)
         {
             _logger = logger;
-            _unitOfWork = unitOfWork;
+            _carRecordService = carRecordService;
+            _employeeService = employeeService;
         }
 
         public IActionResult Index()
@@ -36,27 +36,20 @@ namespace BMW_GarageWebApi.Areas.Customer.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-
         public IActionResult Create()
         {
             CarRecordVM carRecordVM = new()
             {
-                EmployeeList = _unitOfWork.Employee
-               .GetAll().Select(u => new SelectListItem
+                EmployeeList = _employeeService.GetAllEmployee()
+               .Select(u => new SelectListItem
                {
                    Text = u.FullName,
                    Value = u.Id.ToString()
                }),
-                CarRecord = new CarRecord()
-                {
-                    DateOfVisit = DateOnly.FromDateTime(DateTime.Now)
-
-                }
+                DateOfVisit = DateOnly.FromDateTime(DateTime.Now)
             };
             return View(carRecordVM);
-
         }
-
 
         [HttpPost]
         public IActionResult Create(CarRecordVM carRecordVM)
@@ -65,9 +58,19 @@ namespace BMW_GarageWebApi.Areas.Customer.Controllers
 
             if (ModelState.IsValid)
             {
+                CarRecord objCarRecord = new()
+                {
+                    Id = carRecordVM.Id,
+                    FullName = carRecordVM.FullName,
+                    Email = carRecordVM.Email,
+                    PhoneNumber = carRecordVM.PhoneNumber,
+                    Description = carRecordVM.Description,
+                    DateOfVisit = carRecordVM.DateOfVisit,
+                    StatusCarRecord = carRecordVM.StatusCarRecord,
+                    EmployeeId = carRecordVM.EmployeeId
+                };
 
-                _unitOfWork.CarRecord.Add(carRecordVM.CarRecord);
-
+                _carRecordService.AddCarRecord(objCarRecord);
                 TempData["success"] = "Вітаємо! Запис успішно створено. Ми зв'яжемося з Вами найближчим часом. Дякуємо, що обрали нас!";
                 return RedirectToAction("Index");
             }
