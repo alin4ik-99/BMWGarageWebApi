@@ -1,10 +1,10 @@
-﻿using BMW_GarageWebApi.DAL.Interfaces;
-using BMW_GarageWebApi.Domain.Models;
-using BMW_GarageWebApi.Domain.ViewModels;
+﻿using BMW_GarageWebApi.Domain.Models;
+using BMW_GarageWebApi.ViewModels;
 using BMW_GarageWebApi.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using BMW_GarageWebApi.BLL.Interfaces;
 
 namespace BMW_GarageWebApi.Areas.Admin.Controllers
 {
@@ -12,21 +12,17 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
     [Authorize(Roles = SD.Role_Admin)]
     public class CarRecordController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public CarRecordController(IUnitOfWork unitOfWork)
+        private readonly ICarRecordService _carRecordService;
+        private readonly IEmployeeService _employeeService;
+        public CarRecordController(ICarRecordService carRecordService, IEmployeeService employeeService)
         {
-            _unitOfWork = unitOfWork;
+            _carRecordService = carRecordService;
+            _employeeService = employeeService;
         }
 
         public IActionResult Index(string searchString)
         {
-            var objCarRecordList = _unitOfWork.CarRecord.GetAll(includeProperties:"Employee");
-
-            if (objCarRecordList == null)
-            {
-                return Problem("Entity set 'objCarRecordList'  is null.");
-            }
-
+            var objCarRecordList = _carRecordService.GetAllCarRecord();
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -36,66 +32,66 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
             return View(objCarRecordList);
         }
 
-
         public IActionResult Create()
         {
             CarRecordVM carRecordVM = new()
             {
-                EmployeeList = _unitOfWork.Employee
-               .GetAll().Select(u => new SelectListItem
+                EmployeeList = _employeeService.GetAllEmployee()
+                .Select(u => new SelectListItem
                {
                    Text = u.FullName,
                    Value = u.Id.ToString()
                }),
-                CarRecord = new CarRecord() 
-                { 
-                    DateOfVisit = DateOnly.FromDateTime(DateTime.Now)                  
-                }
+                 DateOfVisit = DateOnly.FromDateTime(DateTime.Now)                                  
             };          
-                return View(carRecordVM);
-           
+                return View(carRecordVM);      
         }
 
 
         [HttpPost]
         public IActionResult Create(CarRecordVM carRecordVM)
         {
-
-
             if (ModelState.IsValid)
             {
-   
-                _unitOfWork.CarRecord.Add(carRecordVM.CarRecord);
+                CarRecord objCarRecord = new()
+                {
+                    Id = carRecordVM.Id,
+                    FullName = carRecordVM.FullName,
+                    Email = carRecordVM.Email,
+                    PhoneNumber = carRecordVM.PhoneNumber,
+                    Description = carRecordVM.Description,
+                    DateOfVisit = carRecordVM.DateOfVisit,
+                    StatusCarRecord = carRecordVM.StatusCarRecord,
+                    EmployeeId = carRecordVM.EmployeeId
+                };
+
+                _carRecordService.AddCarRecord(objCarRecord);
                 TempData["success"] = "Запис успішно створено";
                 return RedirectToAction("Index");
             }
             else
             {
-                carRecordVM.EmployeeList = _unitOfWork.Employee
-                           .GetAll().Select(u => new SelectListItem
+                carRecordVM.EmployeeList = _employeeService.GetAllEmployee()
+                           .Select(u => new SelectListItem
                            {
                                Text = u.FullName,
                                Value = u.Id.ToString()
                            });
 
                 return View(carRecordVM);
-            }
-
-           
+            }           
         }
 
-
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int id)
         {
             CarRecordVM carRecordVM = new()
             {
-                EmployeeList = _unitOfWork.Employee
-               .GetAll().Select(u => new SelectListItem
+                EmployeeList = _employeeService.GetAllEmployee()
+                .Select(u => new SelectListItem
                {
                    Text = u.FullName,
                    Value = u.Id.ToString()
-               }),
-                CarRecord = new CarRecord()
+               }),     
             };
             if (id == null || id == 0)
             {
@@ -103,28 +99,49 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
             }
             else
             {
-                carRecordVM.CarRecord = _unitOfWork.CarRecord.Get(u => u.Id == id);
+              var objCarRecord = _carRecordService.GetCarRecord(id);
+
+                if (objCarRecord != null)
+                {
+                    carRecordVM.Id = objCarRecord.Id;
+                    carRecordVM.FullName = objCarRecord.FullName;
+                    carRecordVM.Email = objCarRecord.Email;
+                    carRecordVM.PhoneNumber = objCarRecord.PhoneNumber;
+                    carRecordVM.Description = objCarRecord.Description;
+                    carRecordVM.DateOfVisit = objCarRecord.DateOfVisit;
+                    carRecordVM.StatusCarRecord = objCarRecord.StatusCarRecord;
+                    carRecordVM.EmployeeId = objCarRecord.EmployeeId;
+                }
                 return View(carRecordVM);
             }
-
         }
 
 
         [HttpPost]
         public IActionResult Edit(CarRecordVM carRecordVM)
         {
-
             if (ModelState.IsValid)
             {
-                _unitOfWork.CarRecord.Update(carRecordVM.CarRecord);
+                CarRecord objCarRecord = new()
+                {
+                    Id = carRecordVM.Id,
+                    FullName = carRecordVM.FullName,
+                    Email = carRecordVM.Email,
+                    PhoneNumber = carRecordVM.PhoneNumber,
+                    Description = carRecordVM.Description,
+                    DateOfVisit = carRecordVM.DateOfVisit,
+                    StatusCarRecord = carRecordVM.StatusCarRecord,
+                    EmployeeId = carRecordVM.EmployeeId
+                };
 
+                _carRecordService.UpdateCarRecord(objCarRecord);
                 TempData["success"] = "Запис успішно оновлено";
                 return RedirectToAction("Index");
             }
             else
             {
-                carRecordVM.EmployeeList = _unitOfWork.Employee
-                           .GetAll().Select(u => new SelectListItem
+                carRecordVM.EmployeeList = _employeeService.GetAllEmployee()
+                           .Select(u => new SelectListItem
                            {
                                Text = u.FullName,
                                Value = u.Id.ToString()
@@ -132,20 +149,18 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
 
                 return View(carRecordVM);
             }
-
         }
 
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(int id)
         {
             CarRecordVM carRecordVM = new()
             {
-                EmployeeList = _unitOfWork.Employee
-               .GetAll().Select(u => new SelectListItem
+                EmployeeList = _employeeService.GetAllEmployee()
+                .Select(u => new SelectListItem
                {
                    Text = u.FullName,
                    Value = u.Id.ToString()
                }),
-                CarRecord = new CarRecord()
             };
             if (id == null || id == 0)
             {
@@ -153,26 +168,30 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
             }
             else
             {
-                carRecordVM.CarRecord = _unitOfWork.CarRecord.Get(u => u.Id == id);
+                var objCarRecord = _carRecordService.GetCarRecord(id);
+
+                if (objCarRecord != null)
+                {
+                    carRecordVM.Id = objCarRecord.Id;
+                    carRecordVM.FullName = objCarRecord.FullName;
+                    carRecordVM.Email = objCarRecord.Email;
+                    carRecordVM.PhoneNumber = objCarRecord.PhoneNumber;
+                    carRecordVM.Description = objCarRecord.Description;
+                    carRecordVM.DateOfVisit = objCarRecord.DateOfVisit;
+                    carRecordVM.StatusCarRecord = objCarRecord.StatusCarRecord;
+                    carRecordVM.EmployeeId = objCarRecord.EmployeeId;
+                }
                 return View(carRecordVM);
             }
         }
 
 
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePOST(int? id)
+        public IActionResult DeletePOST(int id)
         {
-            var obj = _unitOfWork.CarRecord.Get(u => u.Id == id);
-
-            if (obj == null)
-            {
-                return NotFound();
-            }
-
-            _unitOfWork.CarRecord.Remove(obj);
+            _carRecordService.RemoveCarRecord(id);
             TempData["success"] = "Запис успішно видалено";
             return RedirectToAction("Index");
-
         }
     }
 }
