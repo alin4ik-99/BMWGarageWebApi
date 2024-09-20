@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
 using BMW_GarageWebApi.BLL.Interfaces;
+using BMW_GarageWebApi.Domain.DTOModels.DTOCarRecord;
 
 namespace BMW_GarageWebApi.Areas.Customer.Controllers
 {
@@ -58,7 +59,7 @@ namespace BMW_GarageWebApi.Areas.Customer.Controllers
 
             if (ModelState.IsValid)
             {
-                CarRecord objCarRecord = new()
+                CarRecordDTO carRecordDTO = new()
                 {
                     Id = carRecordVM.Id,
                     FullName = carRecordVM.FullName,
@@ -70,7 +71,7 @@ namespace BMW_GarageWebApi.Areas.Customer.Controllers
                     EmployeeId = carRecordVM.EmployeeId
                 };
 
-                _carRecordService.AddCarRecord(objCarRecord);
+                _carRecordService.AddCarRecord(carRecordDTO);
                 TempData["success"] = "Вітаємо! Запис успішно створено. Ми зв'яжемося з Вами найближчим часом. Дякуємо, що обрали нас!";
                 return RedirectToAction("Index");
             }

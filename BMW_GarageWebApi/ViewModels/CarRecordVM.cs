@@ -45,7 +45,7 @@ namespace BMW_GarageWebApi.ViewModels
 
         [Display(Name = "Працівник сервісу")]
         public int EmployeeId { get; set; }
-
+        public Employee? Employee { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem>? EmployeeList { get; set; }
     }

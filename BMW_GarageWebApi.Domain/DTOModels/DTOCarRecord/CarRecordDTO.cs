@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BMW_GarageWebApi.Domain.DTOModels
+namespace BMW_GarageWebApi.Domain.DTOModels.DTOCarRecord
 {
     public class CarRecordDTO
     {
@@ -15,8 +15,9 @@ namespace BMW_GarageWebApi.Domain.DTOModels
         public string PhoneNumber { get; set; }
         public string Description { get; set; }
         public DateOnly DateOfVisit { get; set; }
-        public StatusCarRecord StatusCarRecord{ get; set; }
+        public StatusCarRecord StatusCarRecord { get; set; }
         public int EmployeeId { get; set; }
+        public Employee? Employee { get; set; }
 
     }
 }

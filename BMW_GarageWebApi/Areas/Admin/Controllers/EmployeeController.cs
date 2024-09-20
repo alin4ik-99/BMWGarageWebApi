@@ -1,11 +1,11 @@
 ﻿using BMW_GarageWebApi.BLL.Interfaces;
-using BMW_GarageWebApi.DAL.Interfaces;
-using BMW_GarageWebApi.Domain.Models;
+using BMW_GarageWebApi.Domain.DTOModels.DTOCarRepair;
+using BMW_GarageWebApi.Domain.DTOModels.DTOEmployee;
 using BMW_GarageWebApi.Utility;
+using BMW_GarageWebApi.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using static Azure.Core.HttpHeader;
 
 namespace BMW_GarageWebApi.Areas.Admin.Controllers
 {
@@ -13,7 +13,6 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
     [Authorize(Roles = SD.Role_Admin)]
     public class EmployeeController : Controller
     {
-
         private readonly IEmployeeService _employeeService;
         public EmployeeController(IEmployeeService employeeService)
         {
@@ -22,98 +21,159 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
 
         public IActionResult Index(string searchString)
         {
-            var objEmployeeList = _employeeService.GetAllEmployee();
+            var employeeListDTO = _employeeService.GetAllEmployee();
+
+            var employeeListVM = employeeListDTO.Select(obj => new EmployeeVM_Index
+            {
+                Id = obj.Id,
+                FullName = obj.FullName,
+                DateOfBirth = obj.DateOfBirth,
+                DateOfHiring = obj.DateOfHiring,
+                Gender = obj.Gender,
+                Email = obj.Email,
+                PhoneNumber = obj.PhoneNumber,
+                Position = obj.Position
+            });
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                objEmployeeList = objEmployeeList.Where(s => s.FullName!.ToUpper().Contains(searchString.ToUpper()));
+                employeeListVM = employeeListVM.Where(s => s.FullName!.ToUpper().Contains(searchString.ToUpper()));
             }
 
-            return View(objEmployeeList);
+            return View(employeeListVM);
         }
-
 
         public IActionResult Create()
         {
-
             return View();
         }
 
-
         [HttpPost]
-        public IActionResult Create(Employee obj, IFormFile? file)
+        public IActionResult Create(EmployeeVM objVM, IFormFile? file)
         {
-
             if (ModelState.IsValid)
             {
+                var objDTO = new EmployeeDTO
+                {
+                    Id = objVM.Id,
+                    FullName = objVM.FullName,
+                    DateOfBirth = objVM.DateOfBirth,
+                    DateOfHiring = objVM.DateOfHiring,
+                    Gender = objVM.Gender,
+                    Email = objVM.Email,
+                    PhoneNumber = objVM.PhoneNumber,
+                    Position = objVM.Position,
+                    ImageUrl = objVM.ImageUrl,
+                    Notes = objVM.Notes
+                };
 
-                _employeeService.UpdateEmployee(obj, file);
+                _employeeService.UpdateEmployee(objDTO, file);
                 TempData["success"] = "Employee created successfully";
                 return RedirectToAction("Index");
             }
             return View();
         }
 
-
         public IActionResult Edit(int id)
         {
-            if (id == null || id == 0)
+            if (id == 0)
             {
                 return NotFound();
             }
 
-            var employeeFromDb = _employeeService.GetEmployee(id);
+            var employeeDTO = _employeeService.GetEmployee(id);
 
-            if (employeeFromDb == null)
+            if (employeeDTO == null)
             {
                 return NotFound();
             }
 
-            return View(employeeFromDb);
+            var employeeVM = new EmployeeVM
+            {
+                Id = employeeDTO.Id,
+                FullName = employeeDTO.FullName,
+                DateOfBirth = employeeDTO.DateOfBirth,
+                DateOfHiring = employeeDTO.DateOfHiring,
+                Gender = employeeDTO.Gender,
+                Email = employeeDTO.Email,
+                PhoneNumber = employeeDTO.PhoneNumber,
+                Position = employeeDTO.Position,
+                ImageUrl = employeeDTO.ImageUrl,
+                Notes = employeeDTO.Notes
+            };
+
+            return View(employeeVM);
         }
 
-
         [HttpPost]
-        public IActionResult Edit(Employee obj, IFormFile? file)
+        public IActionResult Edit(EmployeeVM objVM, IFormFile? file)
         {
-
             if (ModelState.IsValid)
             {
-                _employeeService.UpdateEmployee(obj, file);
+                var objDTO = new EmployeeDTO
+                {
+                    Id = objVM.Id,
+                    FullName = objVM.FullName,
+                    DateOfBirth = objVM.DateOfBirth,
+                    DateOfHiring = objVM.DateOfHiring,
+                    Gender = objVM.Gender,
+                    Email = objVM.Email,
+                    PhoneNumber = objVM.PhoneNumber,
+                    Position = objVM.Position,
+                    ImageUrl = objVM.ImageUrl,
+                    Notes = objVM.Notes
+                };
+
+                _employeeService.UpdateEmployee(objDTO, file);
                 TempData["success"] = "Employee updated successfully";
                 return RedirectToAction("Index");
             }
             return View();
         }
 
-
-
         public IActionResult Delete(int id)
         {
-            if (id == null || id == 0)
+            if (id == 0)
             {
                 return NotFound();
             }
 
-            var employeeFromDb = _employeeService.GetEmployee(id);
+            var employeeDTO = _employeeService.GetEmployee(id);
 
-            if (employeeFromDb == null)
+            if (employeeDTO == null)
             {
                 return NotFound();
             }
 
-            return View(employeeFromDb);
+            var employeeVM = new EmployeeVM
+            {
+                Id = employeeDTO.Id,
+                FullName = employeeDTO.FullName,
+                DateOfBirth = employeeDTO.DateOfBirth,
+                DateOfHiring = employeeDTO.DateOfHiring,
+                Gender = employeeDTO.Gender,
+                Email = employeeDTO.Email,
+                PhoneNumber = employeeDTO.PhoneNumber,
+                Position = employeeDTO.Position,
+                ImageUrl = employeeDTO.ImageUrl,
+                Notes = employeeDTO.Notes
+            };
+
+            return View(employeeVM);
         }
-
 
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int id)
         {
+            if (id == 0)
+            {
+                return NotFound();
+            }
 
             _employeeService.RemoveEmployee(id);
             TempData["success"] = "Employee deleted successfully";
-            return RedirectToAction("Index");
 
+            return RedirectToAction("Index");
         }
     }
 }

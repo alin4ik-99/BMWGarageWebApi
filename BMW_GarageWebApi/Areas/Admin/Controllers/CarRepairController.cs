@@ -1,9 +1,8 @@
 ﻿using BMW_GarageWebApi.BLL.Interfaces;
-using BMW_GarageWebApi.DAL.Interfaces;
-using BMW_GarageWebApi.Domain.Models;
+using BMW_GarageWebApi.Domain.DTOModels.DTOCarRepair;
 using BMW_GarageWebApi.Utility;
+using BMW_GarageWebApi.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BMW_GarageWebApi.Areas.Admin.Controllers
@@ -20,86 +19,112 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
 
         public IActionResult Index(string searchString)
         {
-            var objCarRepairList = _carRepairService.GetAllCarRepair();
+            var carRepairListDTO = _carRepairService.GetAllCarRepair();
+
+            var carRepairListVM = carRepairListDTO.Select(obj => new CarRepairVM
+            {
+                Id = obj.Id,
+                TypeOfCarRepair = obj.TypeOfCarRepair,
+                PriceMin = obj.PriceMin,
+                PriceMax = obj.PriceMax              
+            });
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                objCarRepairList = objCarRepairList.Where(s => s.TypeOfCarRepair!.ToUpper().Contains(searchString.ToUpper()));
+                carRepairListVM = carRepairListVM.Where(s => s.TypeOfCarRepair!.ToUpper().Contains(searchString.ToUpper()));
             }
-
-            return View(objCarRepairList);
+            return View(carRepairListVM);
         }
-
 
         public IActionResult Create()
         {
             return View();
         }
 
-
         [HttpPost]
-        public IActionResult Create(CarRepair obj)
+        public IActionResult Create(CarRepairVM objVM)
         {
-
             if (ModelState.IsValid)
             {
-                _carRepairService.AddCarRepair(obj);
+                var objDTO = new CarRepairDTO
+                {
+                    Id = objVM.Id,
+                    TypeOfCarRepair = objVM.TypeOfCarRepair,
+                    PriceMin = objVM.PriceMin,
+                    PriceMax = objVM.PriceMax
+                };
+
+                _carRepairService.AddCarRepair(objDTO);
                 TempData["success"] = "Нова послуга успішно створена";
                 return RedirectToAction("Index");
             }
             return View();
         }
 
-
         public IActionResult Edit(int id)
-        {
-            if (id == null || id == 0)
+        {        
+            if (id == 0)
             {
                 return NotFound();
             }
 
-            var carRepairFromDb = _carRepairService.GetCarRepair(id);
+            var carRepairDTO = _carRepairService.GetCarRepair(id);
 
-            if (carRepairFromDb == null)
+            if (carRepairDTO == null)
             {
                 return NotFound();
             }
-
-            return View(carRepairFromDb);
+            var carRepairVM = new CarRepairVM
+            {
+                Id = carRepairDTO.Id,
+                TypeOfCarRepair = carRepairDTO.TypeOfCarRepair,
+                PriceMin = carRepairDTO.PriceMin,
+                PriceMax = carRepairDTO.PriceMax
+            };
+            return View(carRepairVM);
         }
 
-
         [HttpPost]
-        public IActionResult Edit(CarRepair obj)
+        public IActionResult Edit(CarRepairVM objVM)
         {
-
             if (ModelState.IsValid)
             {
+                var objDTO = new CarRepairDTO
+                {
+                    Id = objVM.Id,
+                    TypeOfCarRepair = objVM.TypeOfCarRepair,
+                    PriceMin = objVM.PriceMin,
+                    PriceMax = objVM.PriceMax
+                };
 
-                _carRepairService.UpdateCarRepair(obj);
+                _carRepairService.UpdateCarRepair(objDTO);
                 TempData["success"] = "Послуга успішно оновлена";
                 return RedirectToAction("Index");
             }
             return View();
         }
 
-
-
         public IActionResult Delete(int id)
         {
-            if (id == null || id == 0)
+            if (id == 0)
             {
                 return NotFound();
             }
 
-            var carRepairFromDb = _carRepairService.GetCarRepair(id);
+            var carRepairDTO = _carRepairService.GetCarRepair(id);
 
-            if (carRepairFromDb == null)
+            if (carRepairDTO == null)
             {
                 return NotFound();
             }
-
-            return View(carRepairFromDb);
+            var carRepairVM = new CarRepairVM
+            {
+                Id = carRepairDTO.Id,
+                TypeOfCarRepair = carRepairDTO.TypeOfCarRepair,
+                PriceMin = carRepairDTO.PriceMin,
+                PriceMax = carRepairDTO.PriceMax
+            };
+            return View(carRepairVM);
         }
 
 

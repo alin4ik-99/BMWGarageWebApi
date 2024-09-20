@@ -1,14 +1,15 @@
-﻿using BMW_GarageWebApi.Domain.Models;
+﻿using BMW_GarageWebApi.Domain.DTOModels.DTOCarRepair;
+using BMW_GarageWebApi.Domain.Models;
 using System.Linq.Expressions;
 
 namespace BMW_GarageWebApi.BLL.Interfaces
 {
     public interface ICarRepairService
     {
-        IEnumerable<CarRepair> GetAllCarRepair();
-        CarRepair GetCarRepair(int id);
+        IEnumerable<CarRepairDTO> GetAllCarRepair();
+        CarRepairDTO GetCarRepair(int id);
         void RemoveCarRepair(int id);
-        void AddCarRepair(CarRepair entity);
-        void UpdateCarRepair(CarRepair entity);
+        void AddCarRepair(CarRepairDTO objDTO);
+        void UpdateCarRepair(CarRepairDTO objDTO);
     }
 }

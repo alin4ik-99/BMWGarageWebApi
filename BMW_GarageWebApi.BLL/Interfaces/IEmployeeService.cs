@@ -1,4 +1,5 @@
-﻿using BMW_GarageWebApi.Domain.Models;
+﻿using BMW_GarageWebApi.Domain.DTOModels.DTOEmployee;
+using BMW_GarageWebApi.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using System.Linq.Expressions;
 
@@ -6,10 +7,10 @@ namespace BMW_GarageWebApi.BLL.Interfaces
 {
     public interface IEmployeeService
     {
-        IEnumerable<Employee> GetAllEmployee();
-        Employee GetEmployee(int id);
+        IEnumerable<EmployeeDTO> GetAllEmployee();
+        EmployeeDTO GetEmployee(int id);
         void RemoveEmployee(int id);
-        void AddEmployee(Employee entity, IFormFile? file);
-        void UpdateEmployee(Employee entity, IFormFile? file);
+        void AddEmployee(EmployeeDTO objDTO, IFormFile? file);
+        void UpdateEmployee(EmployeeDTO objDTO, IFormFile? file);
     }
 }

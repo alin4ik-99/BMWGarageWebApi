@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BMW_GarageWebApi.Domain.DTOModels
+namespace BMW_GarageWebApi.Domain.DTOModels.DTOCarRepair
 {
     public class CarRepairDTO
     {
