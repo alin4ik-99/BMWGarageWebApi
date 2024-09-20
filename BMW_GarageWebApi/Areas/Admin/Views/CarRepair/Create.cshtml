@@ -1,6 +1,5 @@
-﻿@using BMW_GarageWebApi.Domain.Models
-@model CarRepair
-
+﻿
+@model CarRepairVM
 
 <div class="container w-50 mb-3">
 <div class="card shadow border-0 mt-4">
@@ -13,11 +12,8 @@
         </div>
 
     <div class="card-body p-4">
-        <form method="post" class="row">
-           
-             
-                        <div class="border p-3">
-                            
+        <form method="post" class="row">                      
+                        <div class="border p-3">                          
                             <div class="form-floating py-2 col-12">
                                 <input asp-for="TypeOfCarRepair" class="form-control border-0 shadow" />
                                 <label asp-for="TypeOfCarRepair" class="ms-2"></label>

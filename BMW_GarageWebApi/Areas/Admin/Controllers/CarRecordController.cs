@@ -1,10 +1,10 @@
-﻿using BMW_GarageWebApi.Domain.Models;
-using BMW_GarageWebApi.ViewModels;
+﻿using BMW_GarageWebApi.ViewModels;
 using BMW_GarageWebApi.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BMW_GarageWebApi.BLL.Interfaces;
+using BMW_GarageWebApi.Domain.DTOModels.DTOCarRecord;
 
 namespace BMW_GarageWebApi.Areas.Admin.Controllers
 {
@@ -22,14 +22,27 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
 
         public IActionResult Index(string searchString)
         {
-            var objCarRecordList = _carRecordService.GetAllCarRecord();
+            var carRecordListDTO = _carRecordService.GetAllCarRecord();
+
+            var carRecordListVM = carRecordListDTO.Select(obj => new CarRecordVM
+            {
+                Id = obj.Id,
+                FullName = obj.FullName,
+                Email = obj.Email,
+                PhoneNumber = obj.PhoneNumber,
+                Description = obj.Description,
+                DateOfVisit = obj.DateOfVisit,
+                StatusCarRecord = obj.StatusCarRecord,
+                EmployeeId = obj.EmployeeId,
+                Employee = obj.Employee
+            });
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                objCarRecordList = objCarRecordList.Where(s => s.FullName!.ToUpper().Contains(searchString.ToUpper()));
+                carRecordListVM = carRecordListVM.Where(s => s.FullName!.ToUpper().Contains(searchString.ToUpper()));
             }
 
-            return View(objCarRecordList);
+            return View(carRecordListVM);
         }
 
         public IActionResult Create()
@@ -47,13 +60,12 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
                 return View(carRecordVM);      
         }
 
-
         [HttpPost]
         public IActionResult Create(CarRecordVM carRecordVM)
         {
             if (ModelState.IsValid)
             {
-                CarRecord objCarRecord = new()
+                CarRecordDTO carRecordDTO = new()
                 {
                     Id = carRecordVM.Id,
                     FullName = carRecordVM.FullName,
@@ -62,10 +74,10 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
                     Description = carRecordVM.Description,
                     DateOfVisit = carRecordVM.DateOfVisit,
                     StatusCarRecord = carRecordVM.StatusCarRecord,
-                    EmployeeId = carRecordVM.EmployeeId
+                    EmployeeId = carRecordVM.EmployeeId                   
                 };
 
-                _carRecordService.AddCarRecord(objCarRecord);
+                _carRecordService.AddCarRecord(carRecordDTO);
                 TempData["success"] = "Запис успішно створено";
                 return RedirectToAction("Index");
             }
@@ -93,13 +105,13 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
                    Value = u.Id.ToString()
                }),     
             };
-            if (id == null || id == 0)
+            if ( id == 0)
             {
                 return NotFound();
             }
             else
             {
-              var objCarRecord = _carRecordService.GetCarRecord(id);
+                var objCarRecord = _carRecordService.GetCarRecord(id);
 
                 if (objCarRecord != null)
                 {
@@ -116,13 +128,12 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
             }
         }
 
-
         [HttpPost]
         public IActionResult Edit(CarRecordVM carRecordVM)
         {
             if (ModelState.IsValid)
             {
-                CarRecord objCarRecord = new()
+                CarRecordDTO carRecordDTO = new()
                 {
                     Id = carRecordVM.Id,
                     FullName = carRecordVM.FullName,
@@ -134,7 +145,7 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
                     EmployeeId = carRecordVM.EmployeeId
                 };
 
-                _carRecordService.UpdateCarRecord(objCarRecord);
+                _carRecordService.UpdateCarRecord(carRecordDTO);
                 TempData["success"] = "Запис успішно оновлено";
                 return RedirectToAction("Index");
             }
@@ -162,7 +173,7 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
                    Value = u.Id.ToString()
                }),
             };
-            if (id == null || id == 0)
+            if (id == 0)
             {
                 return NotFound();
             }

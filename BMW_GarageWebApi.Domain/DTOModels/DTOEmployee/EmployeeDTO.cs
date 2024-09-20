@@ -3,7 +3,7 @@ using BMW_GarageWebApi.Domain.Enum;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
-namespace BMW_GarageWebApi.Domain.DTOModels
+namespace BMW_GarageWebApi.Domain.DTOModels.DTOEmployee
 {
     public class EmployeeDTO
     {

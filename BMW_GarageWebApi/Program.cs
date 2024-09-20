@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using BMW_GarageWebApi.Utility;
 using BMW_GarageWebApi.BLL.Interfaces;
 using BMW_GarageWebApi.BLL.Services;
+using BMW_GarageWebApi.BLL.Profiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +34,8 @@ builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<ICarRecordService, CarRecordService>();
 builder.Services.AddScoped<ICarRepairService, CarRepairService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddAutoMapper(typeof(CarRecordProfile), typeof(EmployeeProfile), typeof(CarRepairProfile));
+
 
 var app = builder.Build();
 
