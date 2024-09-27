@@ -1,17 +1,14 @@
-﻿
-
-using BMW_GarageWebApi.Domain.DTOModels.DTOCarRecord;
-using BMW_GarageWebApi.Domain.Models;
-using System.Linq.Expressions;
+﻿using BMW_GarageWebApi.Domain.DTOModels.DTOCarRecord;
 
 namespace BMW_GarageWebApi.BLL.Interfaces
 {
     public interface ICarRecordService
     {
-        IEnumerable<CarRecordDTO> GetAllCarRecord();
-        CarRecordDTO GetCarRecord(int id);
-        void RemoveCarRecord(int id);
-        void AddCarRecord(CarRecordDTO objDTO);
-        void UpdateCarRecord(CarRecordDTO objDTO);
+        Task<IEnumerable<CarRecordDTO>> GetAllCarRecord();
+        Task<IEnumerable<CarRecordDTO>> GetAllCarRecordUser(string userId);
+        Task<CarRecordDTO> GetCarRecord(int id);
+        Task RemoveCarRecord(int id);
+        Task AddCarRecord(CarRecordDTO objDTO);
+        Task UpdateCarRecord(CarRecordDTO objDTO);
     }
 }

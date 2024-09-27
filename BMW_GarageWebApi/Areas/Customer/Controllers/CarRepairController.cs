@@ -17,9 +17,9 @@ namespace BMW_GarageWebApi.Areas.Customer.Controllers
             _carRepairService = carRepairService;
         }
 
-        public IActionResult Index(string searchString)
+        public async Task<IActionResult> Index(string searchString)
         {
-            var carRepairListDTO = _carRepairService.GetAllCarRepair();
+            var carRepairListDTO = await _carRepairService.GetAllCarRepair();
 
             var carRepairListVM = carRepairListDTO.Select(obj => new CarRepairVM
             {

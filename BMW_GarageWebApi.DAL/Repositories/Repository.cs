@@ -1,12 +1,7 @@
 ﻿using BMW_GarageWebApi.DAL.Data;
 using BMW_GarageWebApi.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BMW_GarageWebApi.DAL.Repositories
 {
@@ -20,15 +15,15 @@ namespace BMW_GarageWebApi.DAL.Repositories
         {
             _db = db;
             dbSet = _db.Set<T>();
-            _db.CarRecords.Include(u => u.Employee).Include(u => u.EmployeeId);
+            _db.CarRecords.Include(u => u.Employee).Include(u => u.EmployeeId).Include(u => u.ApplicationUser).Include(u=>u.ApplicationUserId);
         }
-        public void Add(T entity)
+        public async Task AddAsync(T entity)
         {
-            dbSet.Add(entity);
-            _db.SaveChanges();
+            await dbSet.AddAsync(entity);
+            await _db.SaveChangesAsync();
         }
 
-        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
+        public async Task<T> GetAsync(Expression<Func<T, bool>> filter, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
             query = query.Where(filter);
@@ -42,12 +37,17 @@ namespace BMW_GarageWebApi.DAL.Repositories
                 }
             }
 
-            return query.FirstOrDefault();
+            return await query.FirstOrDefaultAsync();
         }
 
-        public IEnumerable<T> GetAll(string? includeProperties = null)
+        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
+            if (filter != null) 
+            {  
+                query = query.Where(filter); 
+            }          
+
             if (!string.IsNullOrEmpty(includeProperties))
             {
                 foreach (var includeProp in includeProperties
@@ -57,19 +57,19 @@ namespace BMW_GarageWebApi.DAL.Repositories
                 }
             }
 
-            return query;
+            return await query.ToListAsync();
         }
 
-        public void Remove(T entity)
+        public async Task RemoveAsync(T entity)
         {
             dbSet.Remove(entity);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
         }
 
-        public void RemoveRange(IEnumerable<T> entity)
+        public async Task RemoveRangeAsync(IEnumerable<T> entity)
         {
             dbSet.RemoveRange(entity);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
         }
     }
 }

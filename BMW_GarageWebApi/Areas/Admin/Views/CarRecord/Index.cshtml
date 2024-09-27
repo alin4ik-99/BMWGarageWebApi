@@ -6,7 +6,7 @@
         <div class="card-header bg-primary bg-gradient ml-0 py-3">
             <div class="row">
                 <div class="col-12 text-center">
-                    <h2 class="text-white py-2">ЗАПИСИ</h2>
+                    <h2 class="text-white py-2">Records</h2>
                 </div>
             </div>
         </div>
@@ -16,17 +16,17 @@
                 <div class="col-5 text-start">
                     <form asp-controller="CarRecord" asp-action="Index" class="d-flex" role="search">
                         <div class="input-group">
-                            <input class="form-control border-2  border-dark shadow me-1" type="search" placeholder="Введіть ПІБ для пошуку" aria-label="Search" name="SearchString">
+                            <input class="form-control border-2  border-dark shadow me-1" type="search" placeholder="Enter your name to search" aria-label="Search" name="SearchString">
                             <button class="btn btn-outline-dark bg-gradient me-4" type="submit">
                                 <i class="bi bi-search"></i>
                             </button>
-                            <button class="btn btn-outline-dark bg-gradient" type="submit">Всі записи</button>
+                            <button class="btn btn-outline-dark bg-gradient" type="submit">All records</button>
                         </div>
                     </form>
                 </div>
                 <div class="col-7 text-end">
                     <a asp-controller="CarRecord" asp-action="Create" class="btn btn-primary">
-                        <i class="bi bi-plus-circle"></i> Додати новий запис
+                        <i class="bi bi-plus-circle"></i> Add new record
                     </a>
                 </div>
             </div>
@@ -34,13 +34,13 @@
                     <table class="table table-sm table-bordered table-striped table-group-divider text-center">
                         <thead>
                             <tr>
-                                <th> Повне ім'я (ПІБ)</th>
+                                <th> Full name</th>
                                 <th> Email</th>
-                                <th> Номер телефону</th>
-                                <th> Опис послуг</th>
-                                <th> Дата візиту</th>
-                                <th> Працівник сервісу</th>
-                                <th> Статус підтвердження</th>
+                                <th> Phone number</th>
+                                <th> Description of service</th>
+                                <th> Date of visit</th>
+                                <th> Service worker</th>
+                                <th> Confirmation status</th>                                                                   
                                 <th> </th>  
                              </tr>
                         </thead>
@@ -59,10 +59,10 @@
                                     <td>
                                         <div class=" btn-group" role="group">
                                             <a asp-controller="CarRecord" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-sm btn-primary bg-gradient mb-1 mx-1">
-                                                <i class="bi bi-pencil-square"></i> Редагувати
+                                                <i class="bi bi-pencil-square"></i> Edit
                                             </a>
                                             <a asp-controller="CarRecord" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-sm btn-danger mb-1 mx-1">
-                                                <i class="bi bi-trash-fill"></i> Видалити
+                                                <i class="bi bi-trash-fill"></i> Delete
                                             </a>
                                         </div>
                                     </td>

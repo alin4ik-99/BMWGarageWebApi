@@ -17,9 +17,9 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
             _carRepairService = carRepairService;
         }
 
-        public IActionResult Index(string searchString)
+        public async Task<IActionResult> Index(string searchString)
         {
-            var carRepairListDTO = _carRepairService.GetAllCarRepair();
+            var carRepairListDTO = await _carRepairService.GetAllCarRepair();
 
             var carRepairListVM = carRepairListDTO.Select(obj => new CarRepairVM
             {
@@ -42,7 +42,7 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(CarRepairVM objVM)
+        public async Task<IActionResult> Create(CarRepairVM objVM)
         {
             if (ModelState.IsValid)
             {
@@ -54,21 +54,21 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
                     PriceMax = objVM.PriceMax
                 };
 
-                _carRepairService.AddCarRepair(objDTO);
-                TempData["success"] = "Нова послуга успішно створена";
+                await _carRepairService.AddCarRepair(objDTO);
+                TempData["success"] = "A new service has been successfully created";
                 return RedirectToAction("Index");
             }
             return View();
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {        
             if (id == 0)
             {
                 return NotFound();
             }
 
-            var carRepairDTO = _carRepairService.GetCarRepair(id);
+            var carRepairDTO = await _carRepairService.GetCarRepair(id);
 
             if (carRepairDTO == null)
             {
@@ -85,7 +85,7 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(CarRepairVM objVM)
+        public async Task<IActionResult> Edit(CarRepairVM objVM)
         {
             if (ModelState.IsValid)
             {
@@ -97,21 +97,21 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
                     PriceMax = objVM.PriceMax
                 };
 
-                _carRepairService.UpdateCarRepair(objDTO);
-                TempData["success"] = "Послуга успішно оновлена";
+                await _carRepairService.UpdateCarRepair(objDTO);
+                TempData["success"] = "The service has been successfully updated";
                 return RedirectToAction("Index");
             }
             return View();
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == 0)
             {
                 return NotFound();
             }
 
-            var carRepairDTO = _carRepairService.GetCarRepair(id);
+            var carRepairDTO = await _carRepairService.GetCarRepair(id);
 
             if (carRepairDTO == null)
             {
@@ -129,10 +129,10 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
 
 
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePOST(int id)
+        public async Task<IActionResult> DeletePOST(int id)
         {
-            _carRepairService.RemoveCarRepair(id);
-            TempData["success"] = "Послуга успішно видалена";
+            await _carRepairService.RemoveCarRepair(id);
+            TempData["success"] = "The service has been successfully deleted";
             return RedirectToAction("Index");
         }
     }

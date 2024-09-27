@@ -28,28 +28,33 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link fs-5" asp-area="Customer" asp-controller="Home" asp-action="Index">Головна</a>
+                            <a class="nav-link fs-5" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fs-5" asp-area="Customer" asp-controller="CarRepair" asp-action="Index">Послуги</a>
+                            <a class="nav-link fs-5" asp-area="Customer" asp-controller="CarRepair" asp-action="Index">Services</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fs-5" asp-area="Customer" asp-controller="Contacts" asp-action="Index">Контакти</a>
+                            <a class="nav-link fs-5" asp-area="Customer" asp-controller="Contacts" asp-action="Index">Contacts</a>
                         </li>
+                         @if(!User.IsInRole(SD.Role_Admin)){
+                            <li class="nav-item">
+                                <a class="nav-link fs-5" asp-area="Customer" asp-controller="UserCarRecord" asp-action="Index">My records</a>
+                            </li>
+                         }
                         @if(User.IsInRole(SD.Role_Admin)){
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Управління даними
+                                    Data management
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="CarRepair" asp-action="Index">Послуги</a>
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="CarRepair" asp-action="Index">Services</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="CarRecord" asp-action="Index">Записи</a>
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="CarRecord" asp-action="Index">Records</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Employee" asp-action="Index">Працівники</a>
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Employee" asp-action="Index">Employee</a>
                                     </li>
                                     <li><hr class="dropdown-divider"></li>
                                 </ul>
@@ -58,7 +63,7 @@
                     </ul>
                     <div class="my-0 rounded-1 text-light" style="width:200px; height:70px;">
                         <p class="text-light text-center mb-1 fs-6 pe-2">
-                            Пн-Сб 07:00 - 20:00
+                            Mn-St 07:00 - 20:00
                             <small class="" style="color:lightgray;">
                                 os.Witosa, Katowice, Polska 
                             </small>

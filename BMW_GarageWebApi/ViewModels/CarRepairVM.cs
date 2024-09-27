@@ -7,15 +7,15 @@ namespace BMW_GarageWebApi.ViewModels
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "Назва послуги")]
+        [Display(Name = "Name of service")]
         public string TypeOfCarRepair { get; set; }
 
         [Required]
-        [Display(Name = "Мінімальна ціна")]
+        [Display(Name = "Minimum price")]
         public decimal PriceMin { get; set; }
 
         [Required]
-        [Display(Name = "Максимальна ціна")]
+        [Display(Name = "Maximum price")]
         public decimal PriceMax { get; set; }
     }
 }

@@ -6,7 +6,7 @@
         <div class="card-header bg-primary bg-gradient ml-0 py-3">
             <div class="row">
                 <div class="col-12 text-center">
-                    <h2 class="text-white py-2">Редагувати дані працівника</h2>
+                    <h2 class="text-white py-2">Edit employee data</h2>
                 </div>
             </div>
         </div>
@@ -34,9 +34,9 @@
                             </div>
                             <div class="form-floating py-2 col-12">
                                 <select asp-for="Gender" class="form-select border-0 shadow">
-                                    <option disabled selected>Обрати стать людини</option>
-                                    <option value="Male">Чоловік</option>
-                                    <option value="Female">Жінка</option>
+                                    <option disabled selected>Choose a person's gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
                                 </select>
                                 <label asp-for="Gender" class="ms-2"></label>
                                 <span asp-validation-for="Gender" class="text-danger"></span>
@@ -68,12 +68,12 @@
                                 <div class="col-6">
                                     <button type="submit" class="btn btn-primary form-control">
                                         <i class="bi bi-pencil-square pe-2"></i>
-                                        Редагувати
+                                        Edit
                                     </button>
                                 </div>
                                 <div class="col-6">
                                     <a asp-controller="Employee" asp-action="Index" class="btn btn-outline-primary border form-control">
-                                        Повернутися до списку працівників
+                                        Cancel
                                     </a>
                                 </div>
                             </div>

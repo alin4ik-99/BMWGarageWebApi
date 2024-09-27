@@ -1,29 +1,30 @@
-﻿using BMW_GarageWebApi.ViewModels;
-using BMW_GarageWebApi.Utility;
+﻿using BMW_GarageWebApi.BLL.Interfaces;
+using BMW_GarageWebApi.Domain.DTOModels.DTOCarRecord;
+using BMW_GarageWebApi.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using BMW_GarageWebApi.BLL.Interfaces;
-using BMW_GarageWebApi.Domain.DTOModels.DTOCarRecord;
-using BMW_GarageWebApi.Domain.Models;
+using System.Security.Claims;
 
-namespace BMW_GarageWebApi.Areas.Admin.Controllers
+namespace BMW_GarageWebApi.Areas.Customer.Controllers
 {
-    [Area("Admin")]
-    [Authorize(Roles = SD.Role_Admin)]
-    public class CarRecordController : Controller
+    [Area("Customer")]
+    [Authorize]
+    public class UserCarRecordController : Controller
     {
         private readonly ICarRecordService _carRecordService;
         private readonly IEmployeeService _employeeService;
-        public CarRecordController(ICarRecordService carRecordService, IEmployeeService employeeService)
+        public UserCarRecordController(ICarRecordService carRecordService, IEmployeeService employeeService)
         {
             _carRecordService = carRecordService;
             _employeeService = employeeService;
         }
-
         public async Task<IActionResult> Index(string searchString)
         {
-            var carRecordListDTO = await _carRecordService.GetAllCarRecord();
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var carRecordListDTO = await _carRecordService.GetAllCarRecordUser(userId);
 
             var carRecordListVM = carRecordListDTO.Select(obj => new CarRecordVM
             {
@@ -47,7 +48,7 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
             return View(carRecordListVM);
         }
 
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Edit(int id)
         {
             var employeeList = await _employeeService.GetAllEmployee();
 
@@ -58,62 +59,9 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
                     Text = u.FullName,
                     Value = u.Id.ToString()
                 }),
-
-                DateOfVisit = DateOnly.FromDateTime(DateTime.Now)                                  
-            };          
-                return View(carRecordVM);      
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(CarRecordVM carRecordVM)
-        {
-            if (ModelState.IsValid)
-            {
-                CarRecordDTO carRecordDTO = new()
-                {
-                    Id = carRecordVM.Id,
-                    FullName = carRecordVM.FullName,
-                    Email = carRecordVM.Email,
-                    PhoneNumber = carRecordVM.PhoneNumber,
-                    Description = carRecordVM.Description,
-                    DateOfVisit = carRecordVM.DateOfVisit,
-                    StatusCarRecord = carRecordVM.StatusCarRecord,
-                    EmployeeId = carRecordVM.EmployeeId,
-                    ApplicationUserId = carRecordVM.ApplicationUserId
-                };
-
-                await _carRecordService.AddCarRecord(carRecordDTO);
-                TempData["success"] = "The record has been created successfully";
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                var employeeList = await _employeeService.GetAllEmployee();
-
-                carRecordVM.EmployeeList = employeeList.Select(u => new SelectListItem
-                {
-                    Text = u.FullName,
-                    Value = u.Id.ToString()
-                });
-
-                return View(carRecordVM);
-            }           
-        }
-
-        public async Task<IActionResult> Edit(int id)
-        {
-            var employeeList = await _employeeService.GetAllEmployee();
-
-            CarRecordVM carRecordVM = new()
-            {
-                EmployeeList = employeeList.Select(u => new SelectListItem
-               {
-                   Text = u.FullName,
-                   Value = u.Id.ToString()
-               }),     
             };
 
-            if ( id == 0)
+            if (id == 0)
             {
                 return NotFound();
             }
@@ -181,8 +129,8 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
             {
                 EmployeeList = employeeList.Select(u => new SelectListItem
                 {
-                   Text = u.FullName,
-                   Value = u.Id.ToString()
+                    Text = u.FullName,
+                    Value = u.Id.ToString()
                 }),
             };
 

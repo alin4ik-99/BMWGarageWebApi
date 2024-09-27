@@ -7,7 +7,7 @@
         <div class="card-header bg-primary bg-gradient ml-0 py-3">
             <div class="row">
                 <div class="col-12 text-center">
-                    <h2 class="text-white py-2">Delete Record</h2>
+                    <h2 class="text-white py-2">Delete record</h2>
                 </div>
             </div>
         </div>
@@ -24,22 +24,14 @@
                                 <input asp-for="Email" disabled class="form-control border-0 shadow" />
                                 <label asp-for="Email" class="ms-2"></label>
                             </div>
-                            <div class="form-floating py-2 col-12">
-                                <input asp-for="PhoneNumber" disabled class="form-control border-0 shadow" />
-                                <label asp-for="PhoneNumber" class="ms-2"></label>
-                            </div>
                             <div class="row form-floating py-2 ">
                                 <div class="col-6">
                                     <label asp-for="DateOfVisit" class="ms-2"></label>
                                     <input type="date" disabled class="form-control border-0 shadow" asp-for="DateOfVisit" />
                                 </div>
                                 <div class="col-6">
-                                    <label asp-for="StatusCarRecord" class="ms-2"></label>
-                                    <select asp-for="StatusCarRecord" disabled class="form-select border-0 shadow">
-                                        <option disabled selected>---Select Verification Status---</option>
-                                        <option value="Confirmed">Record Confirmed</option>
-                                        <option value="NotConfirmed">Record Not Confirmed</option>
-                                    </select>
+                                    <label asp-for="PhoneNumber" class="ms-2"></label>
+                                    <input asp-for="PhoneNumber" disabled class="form-control border-0 shadow" />                                 
                                 </div>
                             </div>
                             <div class="form-floating py-2 col-12">
@@ -59,7 +51,7 @@
                                     </button>
                                 </div>
                                 <div class="col-6">
-                                    <a asp-controller="CarRecord" asp-action="Index" class="btn btn-outline-primary border form-control">
+                                    <a asp-controller="UserCarRecord" asp-action="Index" class="btn btn-outline-primary border form-control">
                                         Cancel
                                     </a>
                                 </div>

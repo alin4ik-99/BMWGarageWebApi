@@ -16,12 +16,12 @@ namespace BMW_GarageWebApi.BLL.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;   
         }
-        public void AddCarRecord(CarRecordDTO objDTO)
+        public async Task AddCarRecord(CarRecordDTO objDTO)
         {
             try
             {
                 var obj = _mapper.Map<CarRecord>(objDTO);
-                _unitOfWork.CarRecord.Add(obj);
+                await _unitOfWork.CarRecord.AddAsync(obj);
             }
             catch (Exception ex)
             {
@@ -29,11 +29,11 @@ namespace BMW_GarageWebApi.BLL.Services
             }
         }
 
-        public IEnumerable<CarRecordDTO> GetAllCarRecord()
+        public async Task<IEnumerable<CarRecordDTO>> GetAllCarRecord()
         {
             try
             {
-                var carRecordList = _unitOfWork.CarRecord.GetAll(includeProperties: "Employee");
+                var carRecordList = await _unitOfWork.CarRecord.GetAllAsync( includeProperties: "Employee");
                 var carRecordListDTO = _mapper.Map<IEnumerable<CarRecordDTO>>(carRecordList);
                 return carRecordListDTO;
             }
@@ -47,11 +47,29 @@ namespace BMW_GarageWebApi.BLL.Services
             }
         }
 
-        public CarRecordDTO GetCarRecord(int id)
+        public async Task<IEnumerable<CarRecordDTO>> GetAllCarRecordUser(string userId)
         {
             try
             {
-                var carRecord = _unitOfWork.CarRecord.Get(u => u.Id == id);
+                var carRecordList = await _unitOfWork.CarRecord.GetAllAsync(u => u.ApplicationUserId == userId, includeProperties: "Employee");
+                var carRecordListDTO = _mapper.Map<IEnumerable<CarRecordDTO>>(carRecordList);
+                return carRecordListDTO;
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new Exception($"An error occurred while retrieving the data list", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while retrieving the data list", ex);
+            }
+        }
+
+        public async Task<CarRecordDTO> GetCarRecord(int id)
+        {
+            try
+            {
+                var carRecord = await _unitOfWork.CarRecord.GetAsync(u => u.Id == id);
                 var carRecordDTO = _mapper.Map<CarRecordDTO>(carRecord);
                 return carRecordDTO;
             }
@@ -65,12 +83,12 @@ namespace BMW_GarageWebApi.BLL.Services
             }
         }
 
-        public void RemoveCarRecord(int id)
+        public async Task RemoveCarRecord(int id)
         {
             try
             {
-                var carRecordFromDb = _unitOfWork.CarRecord.Get(u => u.Id == id);
-                _unitOfWork.CarRecord.Remove(carRecordFromDb);
+                var carRecordFromDb = await _unitOfWork.CarRecord.GetAsync(u => u.Id == id);
+                await _unitOfWork.CarRecord.RemoveAsync(carRecordFromDb);
             }
             catch (InvalidOperationException ex)
             {
@@ -86,12 +104,12 @@ namespace BMW_GarageWebApi.BLL.Services
             }
         }
 
-        public void UpdateCarRecord(CarRecordDTO objDTO)
+        public async Task UpdateCarRecord(CarRecordDTO objDTO)
         {
             try
             {
                 var obj = _mapper.Map<CarRecord>(objDTO);
-                _unitOfWork.CarRecord.Update(obj);
+                await _unitOfWork.CarRecord.UpdateAsync(obj);
             }
             catch (Exception ex)
             {

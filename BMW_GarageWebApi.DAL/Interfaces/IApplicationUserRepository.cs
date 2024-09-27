@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace BMW_GarageWebApi.DAL.Interfaces
 {
-    public interface ICarRepairRepository : IRepository<CarRepair>
+    public interface IApplicationUserRepository : IRepository<ApplicationUser>
     {
-        Task UpdateAsync(CarRepair obj);
     }
 }

@@ -19,9 +19,9 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
             _employeeService = employeeService;
         }
 
-        public IActionResult Index(string searchString)
+        public async Task<IActionResult> Index(string searchString)
         {
-            var employeeListDTO = _employeeService.GetAllEmployee();
+            var employeeListDTO = await _employeeService.GetAllEmployee();
 
             var employeeListVM = employeeListDTO.Select(obj => new EmployeeVM_Index
             {
@@ -49,7 +49,7 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(EmployeeVM objVM, IFormFile? file)
+        public async Task<IActionResult> Create(EmployeeVM objVM, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
@@ -67,21 +67,21 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
                     Notes = objVM.Notes
                 };
 
-                _employeeService.UpdateEmployee(objDTO, file);
+                await _employeeService.UpdateEmployee(objDTO, file);
                 TempData["success"] = "Employee created successfully";
                 return RedirectToAction("Index");
             }
             return View();
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == 0)
             {
                 return NotFound();
             }
 
-            var employeeDTO = _employeeService.GetEmployee(id);
+            var employeeDTO = await _employeeService.GetEmployee(id);
 
             if (employeeDTO == null)
             {
@@ -106,7 +106,7 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(EmployeeVM objVM, IFormFile? file)
+        public async Task<IActionResult> Edit(EmployeeVM objVM, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
@@ -124,21 +124,21 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
                     Notes = objVM.Notes
                 };
 
-                _employeeService.UpdateEmployee(objDTO, file);
+                await _employeeService.UpdateEmployee(objDTO, file);
                 TempData["success"] = "Employee updated successfully";
                 return RedirectToAction("Index");
             }
             return View();
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == 0)
             {
                 return NotFound();
             }
 
-            var employeeDTO = _employeeService.GetEmployee(id);
+            var employeeDTO = await _employeeService.GetEmployee(id);
 
             if (employeeDTO == null)
             {
@@ -163,14 +163,14 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePOST(int id)
+        public async Task<IActionResult> DeletePOST(int id)
         {
             if (id == 0)
             {
                 return NotFound();
             }
 
-            _employeeService.RemoveEmployee(id);
+            await _employeeService.RemoveEmployee(id);
             TempData["success"] = "Employee deleted successfully";
 
             return RedirectToAction("Index");

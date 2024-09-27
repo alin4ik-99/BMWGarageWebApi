@@ -4,6 +4,7 @@ using BMW_GarageWebApi.DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BMW_GarageWebApi.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240926211540_addAplicationUserToCarRecord")]
+    partial class addAplicationUserToCarRecord
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,6 +34,7 @@ namespace BMW_GarageWebApi.DAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ApplicationUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateOnly>("DateOfVisit")
@@ -73,10 +77,10 @@ namespace BMW_GarageWebApi.DAL.Migrations
                             Id = 1,
                             ApplicationUserId = "0b667fc3-6855-40fb-859a-779947f7c03f",
                             DateOfVisit = new DateOnly(2024, 2, 11),
-                            Description = "Replacing spark plugs",
+                            Description = "Замена свечей зажигания",
                             Email = "sergidavenko12@gmail.com",
                             EmployeeId = 1,
-                            FullName = "Davenko Serhii Viktorovych",
+                            FullName = "Давенко Сергій Вікторович",
                             PhoneNumber = "+48 456 346 641",
                             StatusCarRecord = "NotConfirmed"
                         },
@@ -85,10 +89,10 @@ namespace BMW_GarageWebApi.DAL.Migrations
                             Id = 2,
                             ApplicationUserId = "0b667fc3-6855-40fb-859a-779947f7c03f",
                             DateOfVisit = new DateOnly(2024, 9, 19),
-                            Description = "Ignition system diagnostics",
+                            Description = "Диагностика системы зажигания",
                             Email = "sergikovalenko99@gmail.com",
                             EmployeeId = 2,
-                            FullName = "Kovalenko Serhiy Yervandovych",
+                            FullName = "Коваленко Сергій Єрвандович",
                             PhoneNumber = "+48 471 399 075",
                             StatusCarRecord = "NotConfirmed"
                         },
@@ -97,10 +101,10 @@ namespace BMW_GarageWebApi.DAL.Migrations
                             Id = 3,
                             ApplicationUserId = "0b667fc3-6855-40fb-859a-779947f7c03f",
                             DateOfVisit = new DateOnly(2024, 9, 23),
-                            Description = "Body geometry correction",
+                            Description = "Исправление геометрии кузова",
                             Email = "divangood123@gmail.com",
                             EmployeeId = 3,
-                            FullName = "Divanek Igor Serhiyovich",
+                            FullName = "Діванек Ігор Сергійович",
                             PhoneNumber = "+48 212 564 980",
                             StatusCarRecord = "NotConfirmed"
                         });
@@ -134,21 +138,21 @@ namespace BMW_GarageWebApi.DAL.Migrations
                             Id = 1,
                             PriceMax = 900m,
                             PriceMin = 700m,
-                            TypeOfCarRepair = "Diagnostics of the air conditioner"
+                            TypeOfCarRepair = "Діагностика кондиціонера"
                         },
                         new
                         {
                             Id = 2,
                             PriceMax = 1000m,
                             PriceMin = 400m,
-                            TypeOfCarRepair = "Diagnostics of the Far Eastern Branch"
+                            TypeOfCarRepair = "Діагностика ДВЗ"
                         },
                         new
                         {
                             Id = 3,
                             PriceMax = 1000m,
                             PriceMin = 800m,
-                            TypeOfCarRepair = "Comparative Diagnostics"
+                            TypeOfCarRepair = "Комп'ютерна діагностика"
                         });
                 });
 
@@ -205,12 +209,12 @@ namespace BMW_GarageWebApi.DAL.Migrations
                             DateOfBirth = new DateOnly(1998, 6, 16),
                             DateOfHiring = new DateOnly(2021, 2, 11),
                             Email = "sergizezeria147@gmail.com",
-                            FullName = "Zhezherya Serhiy Viktorovich",
+                            FullName = "Жежеря Сергій Вікторович",
                             Gender = "Male",
                             ImageUrl = "",
-                            Notes = "Completion of the use of diagnostic tools and facilities for the manifestation and solution of a wide range of automotive problems",
+                            Notes = "Досконале володіння діагностичними інструментами та обладнанням для виявлення та вирішення широкого кола автомобільних проблем",
                             PhoneNumber = "+48 456 346 641",
-                            Position = "mechanic"
+                            Position = "Автомеханік"
                         },
                         new
                         {
@@ -218,12 +222,12 @@ namespace BMW_GarageWebApi.DAL.Migrations
                             DateOfBirth = new DateOnly(1991, 5, 15),
                             DateOfHiring = new DateOnly(2021, 2, 11),
                             Email = "rub4iksergo@gmail.com",
-                            FullName = "Rubakov Serhiy Erandovich",
+                            FullName = "Рубаков Сергій Єрвандович",
                             Gender = "Male",
                             ImageUrl = "",
-                            Notes = "Direct communication of navicciations, detailed explanations of repair and technical maintenance of clients",
+                            Notes = "Відмінні комунікативні навички, надання чітких пояснень щодо ремонту та технічного обслуговування клієнтам",
                             PhoneNumber = "+48 116 287 743",
-                            Position = "mechanic"
+                            Position = "Автомеханік"
                         },
                         new
                         {
@@ -231,12 +235,12 @@ namespace BMW_GarageWebApi.DAL.Migrations
                             DateOfBirth = new DateOnly(1998, 6, 11),
                             DateOfHiring = new DateOnly(2021, 2, 12),
                             Email = "gladkoua@gmail.com",
-                            FullName = "Gladkyi Igor Serhiyovich",
+                            FullName = "Гладкий Ігор Сергійович",
                             Gender = "Male",
                             ImageUrl = "",
-                            Notes = "The ability to resolve issues quickly and efficiently, ensuring minimal downtime for customers",
+                            Notes = "здатність швидко й ефективно усувати проблеми, забезпечуючи мінімальний час простою для клієнтів",
                             PhoneNumber = "+48 688 966 121",
-                            Position = "mechanic"
+                            Position = "Автомеханік"
                         });
                 });
 
@@ -474,7 +478,9 @@ namespace BMW_GarageWebApi.DAL.Migrations
                 {
                     b.HasOne("BMW_GarageWebApi.Domain.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BMW_GarageWebApi.Domain.Models.Employee", "Employee")
                         .WithMany()
