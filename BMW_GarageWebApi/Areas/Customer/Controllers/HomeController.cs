@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
 using BMW_GarageWebApi.BLL.Interfaces;
 using BMW_GarageWebApi.Domain.DTOModels.DTOCarRecord;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace BMW_GarageWebApi.Areas.Customer.Controllers
 {
@@ -37,28 +39,31 @@ namespace BMW_GarageWebApi.Areas.Customer.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var employeeList = await _employeeService.GetAllEmployee();
+
             CarRecordVM carRecordVM = new()
             {
-                EmployeeList = _employeeService.GetAllEmployee()
-               .Select(u => new SelectListItem
-               {
+                EmployeeList = employeeList.Select(u => new SelectListItem
+                {
                    Text = u.FullName,
                    Value = u.Id.ToString()
-               }),
+                }),
                 DateOfVisit = DateOnly.FromDateTime(DateTime.Now)
             };
             return View(carRecordVM);
         }
 
         [HttpPost]
-        public IActionResult Create(CarRecordVM carRecordVM)
-        {
-
-
+        [Authorize]
+        public async Task<IActionResult> Create(CarRecordVM carRecordVM)
+        {            
             if (ModelState.IsValid)
             {
+                var claimsIdentity = (ClaimsIdentity)User.Identity;
+                carRecordVM.ApplicationUserId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
                 CarRecordDTO carRecordDTO = new()
                 {
                     Id = carRecordVM.Id,
@@ -68,16 +73,17 @@ namespace BMW_GarageWebApi.Areas.Customer.Controllers
                     Description = carRecordVM.Description,
                     DateOfVisit = carRecordVM.DateOfVisit,
                     StatusCarRecord = carRecordVM.StatusCarRecord,
-                    EmployeeId = carRecordVM.EmployeeId
+                    EmployeeId = carRecordVM.EmployeeId,
+                    ApplicationUserId = carRecordVM.ApplicationUserId
                 };
 
-                _carRecordService.AddCarRecord(carRecordDTO);
-                TempData["success"] = "Вітаємо! Запис успішно створено. Ми зв'яжемося з Вами найближчим часом. Дякуємо, що обрали нас!";
+                await _carRecordService.AddCarRecord(carRecordDTO);
+                TempData["success"] = "Welcome! The record was created successfully. We will contact you as soon as possible. Thank you for choosing us!";
                 return RedirectToAction("Index");
             }
             else
             {
-                TempData["error"] = "Дані введено неправідлово";
+                TempData["error"] = "The data was entered incorrectly";
                 return RedirectToAction("Index");
             }
 

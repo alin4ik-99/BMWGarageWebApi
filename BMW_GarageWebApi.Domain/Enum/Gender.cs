@@ -8,12 +8,8 @@ using System.Threading.Tasks;
 namespace BMW_GarageWebApi.Domain.Enum
 {
     public enum Gender
-    {
-        [Display(Name = "Чоловік")]
+    {        
         Male, 
-
-        [Display(Name = "Жінка")]
         Female
- 
     }
 }

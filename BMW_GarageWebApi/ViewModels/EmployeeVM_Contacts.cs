@@ -7,23 +7,17 @@ namespace BMW_GarageWebApi.ViewModels
 {
     public class EmployeeVM_Contacts
     {
-        
         [Required]
         [MaxLength(40)]
-        [Display(Name = "Повне ім'я (ПІБ)")]
+        [Display(Name = "Full name")]
         public string FullName { get; set; }
-
         [Required]
         public string Email { get; set; }
-
         [Required]
-        [Display(Name = "Номер телефону")]
+        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
-
         [ValidateNever]
         public string? ImageUrl { get; set; }
-
-        [Display(Name = "Характеристика")]
         public string? Notes { get; set; }
     }
 }

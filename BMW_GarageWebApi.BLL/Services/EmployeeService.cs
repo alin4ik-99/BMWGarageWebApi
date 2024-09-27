@@ -20,7 +20,7 @@ namespace BMW_GarageWebApi.BLL.Services
             _webHostEnvironment = webHostEnvironment;
             _mapper = mapper;
         }
-        public void AddEmployee(EmployeeDTO objDTO, IFormFile? file)
+        public async Task AddEmployee(EmployeeDTO objDTO, IFormFile? file)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace BMW_GarageWebApi.BLL.Services
                     objDTO.ImageUrl = @"\images\employee\" + fileName;
                 }
                 var obj = _mapper.Map<Employee>(objDTO);
-                _unitOfWork.Employee.Add(obj);
+                await _unitOfWork.Employee.AddAsync(obj);
             }
 
             catch (DirectoryNotFoundException ex) 
@@ -59,11 +59,11 @@ namespace BMW_GarageWebApi.BLL.Services
             }
         }
 
-        public IEnumerable<EmployeeDTO> GetAllEmployee()
+        public async Task<IEnumerable<EmployeeDTO>> GetAllEmployee()
         {
             try
             {
-                var employeeList = _unitOfWork.Employee.GetAll();
+                var employeeList = await _unitOfWork.Employee.GetAllAsync();
                 var employeeListDTO = _mapper.Map<IEnumerable<EmployeeDTO>>(employeeList);
                 return employeeListDTO;
             }
@@ -78,11 +78,11 @@ namespace BMW_GarageWebApi.BLL.Services
 
         }
 
-        public EmployeeDTO GetEmployee(int id)
+        public async Task<EmployeeDTO> GetEmployee(int id)
         {
             try
             { 
-                var employee = _unitOfWork.Employee.Get(u => u.Id == id);             
+                var employee = await _unitOfWork.Employee.GetAsync(u => u.Id == id);             
                 var employeeDTO = _mapper.Map<EmployeeDTO>(employee);
                 return employeeDTO;
             }
@@ -96,11 +96,11 @@ namespace BMW_GarageWebApi.BLL.Services
             }
         }
 
-        public void RemoveEmployee(int id)
+        public async Task RemoveEmployee(int id)
         {
             try
             {
-                var employeeFromDb = _unitOfWork.Employee.Get(u => u.Id == id);
+                var employeeFromDb = await _unitOfWork.Employee.GetAsync(u => u.Id == id);
 
                 var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, employeeFromDb.ImageUrl.TrimStart('\\'));
 
@@ -109,7 +109,7 @@ namespace BMW_GarageWebApi.BLL.Services
                     File.Delete(oldImagePath);
                 }
 
-                _unitOfWork.Employee.Remove(employeeFromDb);
+                await _unitOfWork.Employee.RemoveAsync(employeeFromDb);
             }
             catch (InvalidOperationException ex)
             {
@@ -126,7 +126,7 @@ namespace BMW_GarageWebApi.BLL.Services
 
         }
 
-        public void UpdateEmployee(EmployeeDTO objDTO, IFormFile? file)
+        public async Task UpdateEmployee(EmployeeDTO objDTO, IFormFile? file)
         {
             try
             {
@@ -152,7 +152,7 @@ namespace BMW_GarageWebApi.BLL.Services
                     }
                     obj.ImageUrl = @"\images\employee\" + fileName;
                 }
-                _unitOfWork.Employee.Update(obj);
+                await _unitOfWork.Employee.UpdateAsync(obj);
             }
             catch (DirectoryNotFoundException ex) 
             { 

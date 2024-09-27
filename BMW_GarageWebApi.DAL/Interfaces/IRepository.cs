@@ -9,11 +9,10 @@ namespace BMW_GarageWebApi.DAL.Interfaces
 {
     public interface IRepository<T> where T : class
     {
-        IEnumerable<T> GetAll(string? includeProperties = null);
-        T Get(Expression<Func<T, bool>> filter, string? includeProperties = null);
-        void Remove(T entity);
-        void Add(T entity);
-        void RemoveRange(IEnumerable<T> entity);
-
+        Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, string? includeProperties = null);
+        Task<T> GetAsync(Expression<Func<T, bool>> filter, string? includeProperties = null);
+        Task RemoveAsync(T entity);
+        Task AddAsync(T entity);
+        Task RemoveRangeAsync(IEnumerable<T> entity);
     }
 }

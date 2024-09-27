@@ -5,13 +5,13 @@ VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BMW_GarageWebApi", "BMW_GarageWebApi\BMW_GarageWebApi.csproj", "{7B8A54CF-CDF1-4CCE-91E2-A44718D02322}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BMW_GarageWebApi.BLL", "BMW_GarageWebApi.BLL\BMW_GarageWebApi.BLL.csproj", "{661FB665-1368-4B26-B283-65FDBE084BA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BMW_GarageWebApi.BLL", "BMW_GarageWebApi.BLL\BMW_GarageWebApi.BLL.csproj", "{661FB665-1368-4B26-B283-65FDBE084BA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BMW_GarageWebApi.DAL", "BMW_GarageWebApi.DAL\BMW_GarageWebApi.DAL.csproj", "{B02CFD83-8AC4-46D5-A4A1-02855337BDCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BMW_GarageWebApi.DAL", "BMW_GarageWebApi.DAL\BMW_GarageWebApi.DAL.csproj", "{B02CFD83-8AC4-46D5-A4A1-02855337BDCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BMW_GarageWebApi.Domain", "BMW_GarageWebApi.Domain\BMW_GarageWebApi.Domain.csproj", "{23818EDB-D3E0-44F5-8655-5D65C5E13F15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BMW_GarageWebApi.Domain", "BMW_GarageWebApi.Domain\BMW_GarageWebApi.Domain.csproj", "{23818EDB-D3E0-44F5-8655-5D65C5E13F15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BMW_GarageWebApi.Utility", "BMW_GarageWebApi.Utility\BMW_GarageWebApi.Utility.csproj", "{8546684B-E37A-411D-B55C-72FB80045756}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BMW_GarageWebApi.Utility", "BMW_GarageWebApi.Utility\BMW_GarageWebApi.Utility.csproj", "{8546684B-E37A-411D-B55C-72FB80045756}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

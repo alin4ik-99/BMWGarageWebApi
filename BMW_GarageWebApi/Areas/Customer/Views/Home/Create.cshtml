@@ -6,7 +6,7 @@
             <div class="card-header bg-primary bg-gradient ml-0 py-3">
                 <div class="row">
                     <div class="col-12 text-center">
-                        <h2 class="text-white py-2">Запис до нашого автосервісу</h2>
+                        <h2 class="text-white py-2">Create a new record</h2>
                     </div>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                                     <div class="col-6">
                                         <label asp-for="EmployeeId" class="ms-2"></label>
                                         <select asp-for="EmployeeId" asp-items="Model.EmployeeList" class="form-select border-0 shadow">
-                                            <option disabled selected>---Вибір працівника сервісу---</option>
+                                            <option disabled selected>---Selecting a service worker---</option>
                                         </select>    
                                         <span asp-validation-for="EmployeeId" class="text-danger"></span>
                                     </div>   
@@ -51,12 +51,12 @@
                                     <div class="col-6">
                                         <button type="submit" class="btn btn-primary form-control">
                                              <i class="bi bi-plus-circle pe-2"></i> 
-                                             Підтвердити запис
+                                             Confirm your record
                                         </button>
                                     </div>
                                     <div class="col-6">
                                         <a asp-area="Customer" asp-controller="Home" asp-action="Index" class="btn btn-outline-primary border form-control">
-                                            Відмінити запис
+                                            Cancel the record
                                         </a>
                                     </div>
                                 </div>

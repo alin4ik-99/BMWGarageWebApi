@@ -18,6 +18,8 @@ namespace BMW_GarageWebApi.Domain.DTOModels.DTOCarRecord
         public StatusCarRecord StatusCarRecord { get; set; }
         public int EmployeeId { get; set; }
         public Employee? Employee { get; set; }
+        public string? ApplicationUserId { get; set; }
+        public ApplicationUser? ApplicationUser { get; set; }
 
     }
 }

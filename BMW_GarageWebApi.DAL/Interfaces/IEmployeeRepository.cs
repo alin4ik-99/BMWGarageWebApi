@@ -9,7 +9,6 @@ namespace BMW_GarageWebApi.DAL.Interfaces
 {
     public interface IEmployeeRepository : IRepository<Employee>
     {
-        void Update(Employee obj);
-       
+        Task UpdateAsync(Employee obj);     
     }
 }

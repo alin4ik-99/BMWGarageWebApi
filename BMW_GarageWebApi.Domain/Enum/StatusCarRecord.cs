@@ -9,11 +9,7 @@ namespace BMW_GarageWebApi.Domain.Enum
 {
     public enum StatusCarRecord
     {
-        [Display(Name = "Запис підтверджено")]
         Confirmed,
-
-        [Display(Name = "Запис не підтверджено")]
         NotConfirmed
-
     }
 }

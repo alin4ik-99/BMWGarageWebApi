@@ -18,9 +18,9 @@ namespace BMW_GarageWebApi.Areas.Customer.Controllers
         {
             _employeeService = employeeService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var employeeListDTO = _employeeService.GetAllEmployee();
+            var employeeListDTO = await _employeeService.GetAllEmployee();
 
             var employeeListVM = employeeListDTO.Select(obj => new EmployeeVM_Contacts
             {

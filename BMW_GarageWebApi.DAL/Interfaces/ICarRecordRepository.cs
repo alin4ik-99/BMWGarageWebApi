@@ -9,6 +9,6 @@ namespace BMW_GarageWebApi.DAL.Interfaces
 {
     public interface ICarRecordRepository: IRepository<CarRecord>
     {
-        void Update(CarRecord obj);
+        Task UpdateAsync(CarRecord obj);
     }
 }

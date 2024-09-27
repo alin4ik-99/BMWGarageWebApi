@@ -6,7 +6,7 @@
         <div class="card-header bg-primary bg-gradient ml-0 py-3">
             <div class="row">
                 <div class="col-12 text-center">
-                    <h2 class="text-white py-2">Видалити працівника</h2>
+                    <h2 class="text-white py-2">Remove Employee</h2>
                 </div>
             </div>
         </div>
@@ -33,9 +33,9 @@
                             </div>
                             <div class="form-floating py-2 col-12">
                                 <select asp-for="Gender" disabled class="form-select border-0 shadow">
-                                    <option disabled selected>Обрати стать людини</option>
-                                    <option value="Male">Чоловік</option>
-                                    <option value="Female">Жінка</option>
+                                    <option disabled selected>Choose a person's gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
                                 </select>
                                 <label asp-for="Gender" class="ms-2"></label>
                             </div>
@@ -63,12 +63,12 @@
                                 <div class="col-6">
                                     <button type="submit" class="btn btn-danger form-control">
                                         <i class="bi bi-trash-fill pe-2"></i>
-                                        Видалити
+                                        Delete
                                     </button>
                                 </div>
                                 <div class="col-6">
                                     <a asp-controller="Employee" asp-action="Index" class="btn btn-outline-primary border form-control">
-                                        Повернутися до списку працівників
+                                        Cancel
                                     </a>
                                 </div>
                             </div>

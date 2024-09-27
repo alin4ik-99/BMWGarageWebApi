@@ -1,0 +1,67 @@
+﻿@model IEnumerable<CarRecordVM>
+
+<div class="container">
+    <div class="card shadow border-0 mt-4 pb-4">
+        <div class="card-header bg-primary bg-gradient pt-4">
+            <div class="row pb-3">
+                <div class="col-7 text-start ps-5">
+                    <h2 class="text-white m-0">My Records</h2>
+                </div>
+                <div class="col-5 text-end">
+                    <form asp-controller="UserCarRecord" asp-action="Index" class="d-flex" role="search">
+                        <div class="input-group">
+                            <input class="form-control  border-2 shadow" type="search" placeholder="Search" aria-label="Search" name="SearchString">
+                            <button class="btn btn-dark bg-gradient me-2" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                            <button class="btn btn-dark bg-gradient" type="submit">All Records</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-4">
+            <div class="table-responsive table-sm fs-6" style="max-height:400px">
+                <table class="table table-sm table-bordered table-striped table-group-divider text-center">
+                    <thead>
+                        <tr>
+                            <th> Full name</th>
+                            <th> Email</th>
+                            <th> Phone number</th>
+                            <th> Description of service</th>
+                            <th> Date of visit</th>
+                            <th> Service worker</th>
+                            <th> Confirmation status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var obj in Model)
+                        {
+                            <tr>
+                                <td> @obj.FullName </td>
+                                <td> @obj.Email</td>
+                                <td> @obj.PhoneNumber</td>
+                                <td> @obj.Description</td>
+                                <td> @obj.DateOfVisit</td>
+                                <td> @obj.Employee.FullName</td>
+                                <td> @obj.StatusCarRecord</td>
+                                <td>
+                                    <div class=" btn-group" role="group">
+                                        <a asp-controller="UserCarRecord" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-sm btn-primary bg-gradient mb-1 mx-1">
+                                            <i class="bi bi-pencil-square"></i> Edit
+                                        </a>
+                                        <a asp-controller="UserCarRecord" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-sm btn-danger mb-1 mx-1">
+                                            <i class="bi bi-trash-fill"></i> Delete
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+

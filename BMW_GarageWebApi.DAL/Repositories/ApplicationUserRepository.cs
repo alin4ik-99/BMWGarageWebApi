@@ -9,17 +9,12 @@ using System.Threading.Tasks;
 
 namespace BMW_GarageWebApi.DAL.Repositories
 {
-    public class CarRecordRepository : Repository<CarRecord>, ICarRecordRepository
+    public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicationUserRepository
     {
         private ApplicationDbContext _db;
-        public CarRecordRepository(ApplicationDbContext db) : base(db)
+        public ApplicationUserRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
-        }
-        public async Task UpdateAsync(CarRecord obj)
-        {
-            _db.CarRecords.Update(obj);
-            await _db.SaveChangesAsync();
         }
     }
 }

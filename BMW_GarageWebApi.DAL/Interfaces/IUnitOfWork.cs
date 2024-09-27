@@ -14,5 +14,6 @@ namespace BMW_GarageWebApi.DAL.Interfaces
 
         IEmployeeRepository Employee { get; }
 
+        IApplicationUserRepository ApplicationUser { get; }
     }
 }

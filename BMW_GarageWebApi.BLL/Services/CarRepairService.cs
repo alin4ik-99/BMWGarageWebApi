@@ -16,12 +16,12 @@ namespace BMW_GarageWebApi.BLL.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;   
         }
-        public void AddCarRepair(CarRepairDTO objDTO)
+        public async Task AddCarRepair(CarRepairDTO objDTO)
         {
             try
             {
                 var obj = _mapper.Map<CarRepair>(objDTO);
-                _unitOfWork.CarRepair.Add(obj);
+                await _unitOfWork.CarRepair.AddAsync(obj);
             }
             catch (Exception ex)
             {
@@ -30,11 +30,11 @@ namespace BMW_GarageWebApi.BLL.Services
 
         }
 
-        public IEnumerable<CarRepairDTO> GetAllCarRepair()
+        public async Task<IEnumerable<CarRepairDTO>> GetAllCarRepair()
         {
             try
             {
-                var carRepairList = _unitOfWork.CarRepair.GetAll();
+                var carRepairList = await _unitOfWork.CarRepair.GetAllAsync();
                 var carRepairListDTO = _mapper.Map<IEnumerable<CarRepairDTO>>(carRepairList);
                 return carRepairListDTO;
             }
@@ -49,11 +49,11 @@ namespace BMW_GarageWebApi.BLL.Services
 
         }
 
-        public CarRepairDTO GetCarRepair(int id)
+        public async Task<CarRepairDTO> GetCarRepair(int id)
         {
             try
             {
-                var carRepair = _unitOfWork.CarRepair.Get(u => u.Id == id);
+                var carRepair = await _unitOfWork.CarRepair.GetAsync(u => u.Id == id);
                 var carRepairDTO = _mapper.Map<CarRepairDTO>(carRepair);
                 return carRepairDTO;
             }
@@ -67,12 +67,12 @@ namespace BMW_GarageWebApi.BLL.Services
             }
         }
 
-        public void RemoveCarRepair(int id)
+        public async Task RemoveCarRepair(int id)
         {
             try
             {
-                var carRepairFromDb = _unitOfWork.CarRepair.Get(u => u.Id == id);
-                _unitOfWork.CarRepair.Remove(carRepairFromDb);
+                var carRepairFromDb = await _unitOfWork.CarRepair.GetAsync(u => u.Id == id);
+                await _unitOfWork.CarRepair.RemoveAsync(carRepairFromDb);
             }
             catch (InvalidOperationException ex)
             {
@@ -89,12 +89,12 @@ namespace BMW_GarageWebApi.BLL.Services
 
         }
 
-        public void UpdateCarRepair(CarRepairDTO objDTO)
+        public async Task UpdateCarRepair(CarRepairDTO objDTO)
         {
             try
             {
                 var obj = _mapper.Map<CarRepair>(objDTO);
-                _unitOfWork.CarRepair.Update(obj);
+                await _unitOfWork.CarRepair.UpdateAsync(obj);
             }
             catch (Exception ex)
             {
