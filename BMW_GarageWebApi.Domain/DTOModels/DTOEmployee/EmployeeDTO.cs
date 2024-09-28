@@ -15,7 +15,7 @@ namespace BMW_GarageWebApi.Domain.DTOModels.DTOEmployee
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string Position { get; set; }
-        public string? ImageUrl { get; set; }
+        public byte[]? ImageDate { get; set; }
         public string? Notes { get; set; }
 
     }

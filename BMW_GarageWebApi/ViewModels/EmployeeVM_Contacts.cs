@@ -17,7 +17,7 @@ namespace BMW_GarageWebApi.ViewModels
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
         [ValidateNever]
-        public string? ImageUrl { get; set; }
+        public string? ImageBase64 { get; set; }
         public string? Notes { get; set; }
     }
 }

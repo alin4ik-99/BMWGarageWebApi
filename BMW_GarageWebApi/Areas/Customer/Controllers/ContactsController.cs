@@ -1,5 +1,6 @@
 ﻿using BMW_GarageWebApi.BLL.Interfaces;
 using BMW_GarageWebApi.DAL.Interfaces;
+using BMW_GarageWebApi.Domain.DTOModels.DTOEmployee;
 using BMW_GarageWebApi.Domain.Models;
 using BMW_GarageWebApi.Utility;
 using BMW_GarageWebApi.ViewModels;
@@ -27,7 +28,7 @@ namespace BMW_GarageWebApi.Areas.Customer.Controllers
                 FullName = obj.FullName,
                 Email = obj.Email,
                 PhoneNumber = obj.PhoneNumber,
-                ImageUrl = obj.ImageUrl,
+                ImageBase64 = obj.ImageDate != null ? Convert.ToBase64String(obj.ImageDate) : null,
                 Notes = obj.Notes
             });           
 

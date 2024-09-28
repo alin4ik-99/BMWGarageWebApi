@@ -36,7 +36,7 @@ namespace BMW_GarageWebApi.Domain.Models
         public string Position { get; set; }
 
         [ValidateNever]
-        public string? ImageUrl { get; set; }
+        public byte[]? ImageDate { get; set; }
         public string? Notes { get; set; }
 
     }

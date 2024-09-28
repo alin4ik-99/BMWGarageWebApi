@@ -33,6 +33,7 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
                 Email = obj.Email,
                 PhoneNumber = obj.PhoneNumber,
                 Position = obj.Position
+                
             });
 
             if (!String.IsNullOrEmpty(searchString))
@@ -63,7 +64,7 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
                     Email = objVM.Email,
                     PhoneNumber = objVM.PhoneNumber,
                     Position = objVM.Position,
-                    ImageUrl = objVM.ImageUrl,
+                    ImageDate = objVM.ImageBase64 != null ? Convert.FromBase64String(objVM.ImageBase64) : null,
                     Notes = objVM.Notes
                 };
 
@@ -98,7 +99,7 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
                 Email = employeeDTO.Email,
                 PhoneNumber = employeeDTO.PhoneNumber,
                 Position = employeeDTO.Position,
-                ImageUrl = employeeDTO.ImageUrl,
+                ImageBase64 = employeeDTO.ImageDate != null ? Convert.ToBase64String(employeeDTO.ImageDate) : null,
                 Notes = employeeDTO.Notes
             };
 
@@ -120,7 +121,7 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
                     Email = objVM.Email,
                     PhoneNumber = objVM.PhoneNumber,
                     Position = objVM.Position,
-                    ImageUrl = objVM.ImageUrl,
+                    ImageDate = objVM.ImageBase64 != null ? Convert.FromBase64String(objVM.ImageBase64) : null,
                     Notes = objVM.Notes
                 };
 
@@ -155,7 +156,7 @@ namespace BMW_GarageWebApi.Areas.Admin.Controllers
                 Email = employeeDTO.Email,
                 PhoneNumber = employeeDTO.PhoneNumber,
                 Position = employeeDTO.Position,
-                ImageUrl = employeeDTO.ImageUrl,
+                ImageBase64 = employeeDTO.ImageDate != null ? Convert.ToBase64String(employeeDTO.ImageDate) : null,
                 Notes = employeeDTO.Notes
             };
 

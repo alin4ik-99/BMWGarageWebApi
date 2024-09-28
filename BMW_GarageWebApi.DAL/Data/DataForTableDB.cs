@@ -93,7 +93,7 @@ namespace BMW_GarageWebApi.DAL.Data
                     Email = "sergizezeria147@gmail.com",
                     PhoneNumber = "+48 456 346 641",
                     Position = "mechanic",
-                    ImageUrl = "",
+                    ImageDate = null,
                     Notes = "Completion of the use of diagnostic tools and facilities for the manifestation and solution of a wide range of automotive problems"
                 },
                 new Employee
@@ -106,7 +106,7 @@ namespace BMW_GarageWebApi.DAL.Data
                     Email = "rub4iksergo@gmail.com",
                     PhoneNumber = "+48 116 287 743",
                     Position = "mechanic",
-                    ImageUrl = "",
+                    ImageDate = null,
                     Notes = "Direct communication of navicciations, detailed explanations of repair and technical maintenance of clients"
                 },
                 new Employee
@@ -119,7 +119,7 @@ namespace BMW_GarageWebApi.DAL.Data
                     Email = "gladkoua@gmail.com",
                     PhoneNumber = "+48 688 966 121",
                     Position = "mechanic",
-                    ImageUrl = "",
+                    ImageDate = null,
                     Notes = "The ability to resolve issues quickly and efficiently, ensuring minimal downtime for customers"
                 }
             ];
