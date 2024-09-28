@@ -3,22 +3,16 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace BMW_GarageWebApi.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class addIdentityTables : Migration
+    public partial class newDbbmw : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "Description",
-                table: "CarRecords",
-                type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -38,6 +32,12 @@ namespace BMW_GarageWebApi.DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StreetAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -56,6 +56,42 @@ namespace BMW_GarageWebApi.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CarRepairs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TypeOfCarRepair = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PriceMin = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PriceMax = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CarRepairs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Employees",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FullName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    DateOfBirth = table.Column<DateOnly>(type: "date", nullable: false),
+                    DateOfHiring = table.Column<DateOnly>(type: "date", nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Position = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employees", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -164,6 +200,67 @@ namespace BMW_GarageWebApi.DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CarRecords",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FullName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateOfVisit = table.Column<DateOnly>(type: "date", nullable: false),
+                    StatusCarRecord = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EmployeeId = table.Column<int>(type: "int", nullable: false),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CarRecords", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CarRecords_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_CarRecords_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "CarRepairs",
+                columns: new[] { "Id", "PriceMax", "PriceMin", "TypeOfCarRepair" },
+                values: new object[,]
+                {
+                    { 1, 900m, 700m, "Diagnostics of the air conditioner" },
+                    { 2, 1000m, 400m, "Diagnostics of the Far Eastern Branch" },
+                    { 3, 1000m, 800m, "Comparative Diagnostics" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Employees",
+                columns: new[] { "Id", "DateOfBirth", "DateOfHiring", "Email", "FullName", "Gender", "ImageUrl", "Notes", "PhoneNumber", "Position" },
+                values: new object[,]
+                {
+                    { 1, new DateOnly(1998, 6, 16), new DateOnly(2021, 2, 11), "sergizezeria147@gmail.com", "Zhezherya Serhiy Viktorovich", "Male", "", "Completion of the use of diagnostic tools and facilities for the manifestation and solution of a wide range of automotive problems", "+48 456 346 641", "mechanic" },
+                    { 2, new DateOnly(1991, 5, 15), new DateOnly(2021, 2, 11), "rub4iksergo@gmail.com", "Rubakov Serhiy Erandovich", "Male", "", "Direct communication of navicciations, detailed explanations of repair and technical maintenance of clients", "+48 116 287 743", "mechanic" },
+                    { 3, new DateOnly(1998, 6, 11), new DateOnly(2021, 2, 12), "gladkoua@gmail.com", "Gladkyi Igor Serhiyovich", "Male", "", "The ability to resolve issues quickly and efficiently, ensuring minimal downtime for customers", "+48 688 966 121", "mechanic" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "CarRecords",
+                columns: new[] { "Id", "ApplicationUserId", "DateOfVisit", "Description", "Email", "EmployeeId", "FullName", "PhoneNumber", "StatusCarRecord" },
+                values: new object[,]
+                {
+                    { 1, null, new DateOnly(2024, 2, 11), "Replacing spark plugs", "sergidavenko12@gmail.com", 1, "Davenko Serhii Viktorovych", "+48 456 346 641", "NotConfirmed" },
+                    { 2, null, new DateOnly(2024, 9, 19), "Ignition system diagnostics", "sergikovalenko99@gmail.com", 2, "Kovalenko Serhiy Yervandovych", "+48 471 399 075", "NotConfirmed" },
+                    { 3, null, new DateOnly(2024, 9, 23), "Body geometry correction", "divangood123@gmail.com", 3, "Divanek Igor Serhiyovich", "+48 212 564 980", "NotConfirmed" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -202,6 +299,16 @@ namespace BMW_GarageWebApi.DAL.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CarRecords_ApplicationUserId",
+                table: "CarRecords",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CarRecords_EmployeeId",
+                table: "CarRecords",
+                column: "EmployeeId");
         }
 
         /// <inheritdoc />
@@ -223,20 +330,19 @@ namespace BMW_GarageWebApi.DAL.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "CarRecords");
+
+            migrationBuilder.DropTable(
+                name: "CarRepairs");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
-            migrationBuilder.AlterColumn<string>(
-                name: "Description",
-                table: "CarRecords",
-                type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
+            migrationBuilder.DropTable(
+                name: "Employees");
         }
     }
 }

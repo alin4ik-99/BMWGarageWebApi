@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BMW_GarageWebApi.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240915103326_addIdentityTables")]
-    partial class addIdentityTables
+    [Migration("20240928174943_newDbbmw")]
+    partial class newDbbmw
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,6 +33,9 @@ namespace BMW_GarageWebApi.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateOnly>("DateOfVisit")
                         .HasColumnType("date");
 
@@ -48,8 +51,8 @@ namespace BMW_GarageWebApi.DAL.Migrations
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -61,6 +64,8 @@ namespace BMW_GarageWebApi.DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ApplicationUserId");
+
                     b.HasIndex("EmployeeId");
 
                     b.ToTable("CarRecords");
@@ -70,10 +75,10 @@ namespace BMW_GarageWebApi.DAL.Migrations
                         {
                             Id = 1,
                             DateOfVisit = new DateOnly(2024, 2, 11),
-                            Description = "Замена свечей зажигания",
+                            Description = "Replacing spark plugs",
                             Email = "sergidavenko12@gmail.com",
                             EmployeeId = 1,
-                            FullName = "Давенко Сергій Вікторович",
+                            FullName = "Davenko Serhii Viktorovych",
                             PhoneNumber = "+48 456 346 641",
                             StatusCarRecord = "NotConfirmed"
                         },
@@ -81,10 +86,10 @@ namespace BMW_GarageWebApi.DAL.Migrations
                         {
                             Id = 2,
                             DateOfVisit = new DateOnly(2024, 9, 19),
-                            Description = "Диагностика системы зажигания",
+                            Description = "Ignition system diagnostics",
                             Email = "sergikovalenko99@gmail.com",
                             EmployeeId = 2,
-                            FullName = "Коваленко Сергій Єрвандович",
+                            FullName = "Kovalenko Serhiy Yervandovych",
                             PhoneNumber = "+48 471 399 075",
                             StatusCarRecord = "NotConfirmed"
                         },
@@ -92,10 +97,10 @@ namespace BMW_GarageWebApi.DAL.Migrations
                         {
                             Id = 3,
                             DateOfVisit = new DateOnly(2024, 9, 23),
-                            Description = "Исправление геометрии кузова",
+                            Description = "Body geometry correction",
                             Email = "divangood123@gmail.com",
                             EmployeeId = 3,
-                            FullName = "Діванек Ігор Сергійович",
+                            FullName = "Divanek Igor Serhiyovich",
                             PhoneNumber = "+48 212 564 980",
                             StatusCarRecord = "NotConfirmed"
                         });
@@ -109,11 +114,11 @@ namespace BMW_GarageWebApi.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<double>("PriceFrom")
-                        .HasColumnType("float");
+                    b.Property<decimal>("PriceMax")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<double>("PriceTo")
-                        .HasColumnType("float");
+                    b.Property<decimal>("PriceMin")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("TypeOfCarRepair")
                         .IsRequired()
@@ -127,23 +132,23 @@ namespace BMW_GarageWebApi.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            PriceFrom = 700.0,
-                            PriceTo = 900.0,
-                            TypeOfCarRepair = "Діагностика кондиціонера"
+                            PriceMax = 900m,
+                            PriceMin = 700m,
+                            TypeOfCarRepair = "Diagnostics of the air conditioner"
                         },
                         new
                         {
                             Id = 2,
-                            PriceFrom = 400.0,
-                            PriceTo = 1000.0,
-                            TypeOfCarRepair = "Діагностика ДВЗ"
+                            PriceMax = 1000m,
+                            PriceMin = 400m,
+                            TypeOfCarRepair = "Diagnostics of the Far Eastern Branch"
                         },
                         new
                         {
                             Id = 3,
-                            PriceFrom = 800.0,
-                            PriceTo = 1000.0,
-                            TypeOfCarRepair = "Комп'ютерна діагностика"
+                            PriceMax = 1000m,
+                            PriceMin = 800m,
+                            TypeOfCarRepair = "Comparative Diagnostics"
                         });
                 });
 
@@ -167,19 +172,17 @@ namespace BMW_GarageWebApi.DAL.Migrations
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Gender")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Notes")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
@@ -188,8 +191,8 @@ namespace BMW_GarageWebApi.DAL.Migrations
 
                     b.Property<string>("Position")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -202,12 +205,12 @@ namespace BMW_GarageWebApi.DAL.Migrations
                             DateOfBirth = new DateOnly(1998, 6, 16),
                             DateOfHiring = new DateOnly(2021, 2, 11),
                             Email = "sergizezeria147@gmail.com",
-                            FullName = "Жежеря Сергій Вікторович",
+                            FullName = "Zhezherya Serhiy Viktorovich",
                             Gender = "Male",
                             ImageUrl = "",
-                            Notes = "Досконале володіння діагностичними інструментами та обладнанням для виявлення та вирішення широкого кола автомобільних проблем",
+                            Notes = "Completion of the use of diagnostic tools and facilities for the manifestation and solution of a wide range of automotive problems",
                             PhoneNumber = "+48 456 346 641",
-                            Position = "Автомеханік"
+                            Position = "mechanic"
                         },
                         new
                         {
@@ -215,12 +218,12 @@ namespace BMW_GarageWebApi.DAL.Migrations
                             DateOfBirth = new DateOnly(1991, 5, 15),
                             DateOfHiring = new DateOnly(2021, 2, 11),
                             Email = "rub4iksergo@gmail.com",
-                            FullName = "Рубаков Сергій Єрвандович",
+                            FullName = "Rubakov Serhiy Erandovich",
                             Gender = "Male",
                             ImageUrl = "",
-                            Notes = "Відмінні комунікативні навички, надання чітких пояснень щодо ремонту та технічного обслуговування клієнтам",
+                            Notes = "Direct communication of navicciations, detailed explanations of repair and technical maintenance of clients",
                             PhoneNumber = "+48 116 287 743",
-                            Position = "Автомеханік"
+                            Position = "mechanic"
                         },
                         new
                         {
@@ -228,12 +231,12 @@ namespace BMW_GarageWebApi.DAL.Migrations
                             DateOfBirth = new DateOnly(1998, 6, 11),
                             DateOfHiring = new DateOnly(2021, 2, 12),
                             Email = "gladkoua@gmail.com",
-                            FullName = "Гладкий Ігор Сергійович",
+                            FullName = "Gladkyi Igor Serhiyovich",
                             Gender = "Male",
                             ImageUrl = "",
-                            Notes = "здатність швидко й ефективно усувати проблеми, забезпечуючи мінімальний час простою для клієнтів",
+                            Notes = "The ability to resolve issues quickly and efficiently, ensuring minimal downtime for customers",
                             PhoneNumber = "+48 688 966 121",
-                            Position = "Автомеханік"
+                            Position = "mechanic"
                         });
                 });
 
@@ -301,6 +304,11 @@ namespace BMW_GarageWebApi.DAL.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(21)
+                        .HasColumnType("nvarchar(21)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -352,6 +360,10 @@ namespace BMW_GarageWebApi.DAL.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator().HasValue("IdentityUser");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -435,13 +447,42 @@ namespace BMW_GarageWebApi.DAL.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("BMW_GarageWebApi.Domain.Models.ApplicationUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
             modelBuilder.Entity("BMW_GarageWebApi.Domain.Models.CarRecord", b =>
                 {
+                    b.HasOne("BMW_GarageWebApi.Domain.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("BMW_GarageWebApi.Domain.Models.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ApplicationUser");
 
                     b.Navigation("Employee");
                 });

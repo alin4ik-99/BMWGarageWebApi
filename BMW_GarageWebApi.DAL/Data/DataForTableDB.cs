@@ -24,7 +24,7 @@ namespace BMW_GarageWebApi.DAL.Data
                     PhoneNumber = "+48 456 346 641",
                     EmployeeId = 1,
                     Description = "Replacing spark plugs",
-                    ApplicationUserId = "0b667fc3-6855-40fb-859a-779947f7c03f"
+                    ApplicationUserId = null
                 },
                 new CarRecord
                 {
@@ -36,7 +36,7 @@ namespace BMW_GarageWebApi.DAL.Data
                     PhoneNumber = "+48 471 399 075",
                     EmployeeId = 2,
                     Description = "Ignition system diagnostics",
-                    ApplicationUserId = "0b667fc3-6855-40fb-859a-779947f7c03f"
+                    ApplicationUserId = null
                 },
                 new CarRecord
                 {
@@ -48,7 +48,7 @@ namespace BMW_GarageWebApi.DAL.Data
                     PhoneNumber = "+48 212 564 980",
                     EmployeeId = 3,
                     Description = "Body geometry correction",
-                    ApplicationUserId = "0b667fc3-6855-40fb-859a-779947f7c03f"
+                    ApplicationUserId = null
                 }
             ];        
         }

@@ -71,7 +71,6 @@ namespace BMW_GarageWebApi.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            ApplicationUserId = "0b667fc3-6855-40fb-859a-779947f7c03f",
                             DateOfVisit = new DateOnly(2024, 2, 11),
                             Description = "Replacing spark plugs",
                             Email = "sergidavenko12@gmail.com",
@@ -83,7 +82,6 @@ namespace BMW_GarageWebApi.DAL.Migrations
                         new
                         {
                             Id = 2,
-                            ApplicationUserId = "0b667fc3-6855-40fb-859a-779947f7c03f",
                             DateOfVisit = new DateOnly(2024, 9, 19),
                             Description = "Ignition system diagnostics",
                             Email = "sergikovalenko99@gmail.com",
@@ -95,7 +93,6 @@ namespace BMW_GarageWebApi.DAL.Migrations
                         new
                         {
                             Id = 3,
-                            ApplicationUserId = "0b667fc3-6855-40fb-859a-779947f7c03f",
                             DateOfVisit = new DateOnly(2024, 9, 23),
                             Description = "Body geometry correction",
                             Email = "divangood123@gmail.com",
