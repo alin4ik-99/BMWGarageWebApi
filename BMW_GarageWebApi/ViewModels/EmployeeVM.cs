@@ -39,7 +39,7 @@ namespace BMW_GarageWebApi.ViewModels
         public string Position { get; set; }
 
         [ValidateNever]
-        public string? ImageUrl { get; set; }
+        public string? ImageBase64 { get; set; }
 
         [Display(Name = "Notes")]
         public string? Notes { get; set; }

@@ -23,20 +23,16 @@ namespace BMW_GarageWebApi.BLL.Services
         public async Task AddEmployee(EmployeeDTO objDTO, IFormFile? file)
         {
             try
-            {
-                string wwwRootPath = _webHostEnvironment.WebRootPath;
+            {             
                 if (file != null)
                 {
-                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                    string employeePath = Path.Combine(wwwRootPath, @"images\employee");
-
-                    using (var fileStream = new FileStream(Path.Combine(employeePath, fileName), FileMode.Create))
+                    using (var memoryStream = new MemoryStream())
                     {
-                        file.CopyTo(fileStream);
+                        await file.CopyToAsync(memoryStream);
+                        objDTO.ImageDate = memoryStream.ToArray();
                     }
-
-                    objDTO.ImageUrl = @"\images\employee\" + fileName;
                 }
+
                 var obj = _mapper.Map<Employee>(objDTO);
                 await _unitOfWork.Employee.AddAsync(obj);
             }
@@ -75,7 +71,6 @@ namespace BMW_GarageWebApi.BLL.Services
             { 
                 throw new Exception($"An error occurred while retrieving the data list", ex); 
             }
-
         }
 
         public async Task<EmployeeDTO> GetEmployee(int id)
@@ -100,15 +95,7 @@ namespace BMW_GarageWebApi.BLL.Services
         {
             try
             {
-                var employeeFromDb = await _unitOfWork.Employee.GetAsync(u => u.Id == id);
-
-                var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, employeeFromDb.ImageUrl.TrimStart('\\'));
-
-                if (File.Exists(oldImagePath))
-                {
-                    File.Delete(oldImagePath);
-                }
-
+                var employeeFromDb = await _unitOfWork.Employee.GetAsync(u => u.Id == id);            
                 await _unitOfWork.Employee.RemoveAsync(employeeFromDb);
             }
             catch (InvalidOperationException ex)
@@ -131,26 +118,13 @@ namespace BMW_GarageWebApi.BLL.Services
             try
             {
                 var obj = _mapper.Map<Employee>(objDTO);
-
-                string wwwRootPath = _webHostEnvironment.WebRootPath;
                 if (file != null)
                 {
-                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                    string employeePath = Path.Combine(wwwRootPath, @"images\employee");
-                    if (!string.IsNullOrEmpty(obj.ImageUrl))
+                    using (var memoryStream = new MemoryStream())
                     {
-                        //delete the old image
-                        var oldImagePath = Path.Combine(wwwRootPath, obj.ImageUrl.TrimStart('\\'));
-                        if (File.Exists(oldImagePath))
-                        {
-                            File.Delete(oldImagePath);
-                        }
+                        await file.CopyToAsync(memoryStream);
+                        obj.ImageDate = memoryStream.ToArray();
                     }
-                    using (var fileStream = new FileStream(Path.Combine(employeePath, fileName), FileMode.Create))
-                    {
-                        file.CopyTo(fileStream);
-                    }
-                    obj.ImageUrl = @"\images\employee\" + fileName;
                 }
                 await _unitOfWork.Employee.UpdateAsync(obj);
             }
