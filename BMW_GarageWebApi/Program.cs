@@ -8,6 +8,7 @@ using BMW_GarageWebApi.Utility;
 using BMW_GarageWebApi.BLL.Interfaces;
 using BMW_GarageWebApi.BLL.Services;
 using BMW_GarageWebApi.BLL.Profiles;
+using BMW_GarageWebApi.DAL.DbInitializer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 builder.Services.AddRazorPages();
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWorks>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<ICarRecordService, CarRecordService>();
@@ -52,6 +54,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+SeedDatabase();
 app.MapRazorPages();
 
 app.MapControllerRoute(
@@ -59,3 +62,11 @@ app.MapControllerRoute(
     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+void SeedDatabase()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+        dbInitializer.Initialize();
+    }
+}

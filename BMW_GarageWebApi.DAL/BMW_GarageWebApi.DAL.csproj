@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BMW_GarageWebApi.Domain\BMW_GarageWebApi.Domain.csproj" />
+    <ProjectReference Include="..\BMW_GarageWebApi.Utility\BMW_GarageWebApi.Utility.csproj" />
   </ItemGroup>
 
 </Project>
